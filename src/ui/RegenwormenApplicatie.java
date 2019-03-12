@@ -3,6 +3,8 @@ package ui;
 import domein.Dobbelsteen;
 import domein.Speler;
 import java.util.Scanner;
+import domein.Tegel;
+import java.util.ArrayList;
 
 public class RegenwormenApplicatie {
 
@@ -15,8 +17,9 @@ public class RegenwormenApplicatie {
         boolean beslissing;
         boolean isLeeg;
         String naam, antwoord;
-
         String getal;
+        ArrayList<Speler> spelers = new ArrayList<>();
+        
         //Aantal Spelers
         System.out.println("Met hoeveel spelers wil je spelen?");
         int aantalSpelers = input.nextInt();
@@ -25,8 +28,8 @@ public class RegenwormenApplicatie {
             System.out.println("Geef je naam in:");
             naam = input.next();
             Speler speler = new Speler(naam);
-            speler.voegNaamToe();
-
+            spelers.add(speler);
+            
             speler.setAantalDobbelstenen(8);
             do {
 
@@ -65,8 +68,7 @@ public class RegenwormenApplicatie {
                             antwoord = input.next().toUpperCase();
                             beslissing = speler.WilJeVerderSpelen(antwoord);
                             if (beslissing == true) {
-                                System.out.println("Je beëindigt je beurt met een score van " + speler.getResultaat() + " en kan een tegel nemen.");
-                                
+                                System.out.println("Je beëindigt je beurt met een score van " + speler.getResultaat() + " en kan een tegel nemen.");                             
                             }
                         }
                     } else {

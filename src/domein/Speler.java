@@ -15,8 +15,8 @@ public class Speler {
     private ArrayList<String> dobbelsteenWaarden = new ArrayList<>();
     private ArrayList<String> gekozenWaarden = new ArrayList<>();
     private boolean laatsteKeuze = false;
-    private ArrayList<String> spelerNamen = new ArrayList<>();
-
+    private ArrayList<Tegel> tegels = new ArrayList<>();
+    
     public Speler(String spelerNaam) {
         this.spelerNaam = spelerNaam;
     }
@@ -28,21 +28,13 @@ public class Speler {
     public void setResultaat(int resultaat) {
         this.resultaat = resultaat;
     }
-    
+
     public String getSpelerNaam() {
         return spelerNaam;
     }
 
     public void setSpelerNaam(String spelerNaam) {
         this.spelerNaam = spelerNaam;
-    }
-
-    public ArrayList<String> getSpelerNamen() {
-        return spelerNamen;
-    }
-
-    public void setSpelerNamen(ArrayList<String> spelerNamen) {
-        this.spelerNamen = spelerNamen;
     }
 
     public boolean isLaatsteKeuze() {
@@ -166,22 +158,16 @@ public class Speler {
         return controle;
     }
 
-    public void voegNaamToe(){
-        spelerNamen.add(spelerNaam);
-    }
-    
-     public boolean WilJeVerderSpelen(String antwoord)
-    {
-                    do {
-                        if ("J".equals(antwoord)) {
-                        } else if ("N".equals(antwoord)) 
-                        {
-                            setEindeRonde(true);
-                            return true;
-                            
-                        }
-                    } while (!"J".equals(antwoord) && !"N".equals(antwoord));
-                
+    public boolean WilJeVerderSpelen(String antwoord) {
+        do {
+            if ("J".equals(antwoord)) {
+            } else if ("N".equals(antwoord)) {
+                setEindeRonde(true);
+                return true;
+
+            }
+        } while (!"J".equals(antwoord) && !"N".equals(antwoord));
+
         return false;
     }
 }
