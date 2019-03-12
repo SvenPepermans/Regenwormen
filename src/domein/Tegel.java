@@ -8,6 +8,7 @@ public class Tegel
 {
     private ArrayList<Integer> tegelWaarden = new ArrayList<>(Arrays.asList(21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36));
     int waarde;
+    private ArrayList<Integer> spelerWaarden = new ArrayList<>();
 
     public int getWaarde() {
         return waarde;
@@ -48,7 +49,9 @@ public class Tegel
         for(int i = 0; i <= tegelWaarden.size(); i++){
             if(tegelWaarden.get(i)== waarde){
                 tegelWaarden.remove(i);
+                spelerWaarden.add(waarde);
             }
         }
     }
+    
 }

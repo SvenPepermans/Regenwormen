@@ -17,6 +17,10 @@ public class Speler {
     private boolean laatsteKeuze = false;
     private ArrayList<String> spelerNamen = new ArrayList<>();
 
+    public Speler(String spelerNaam) {
+        this.spelerNaam = spelerNaam;
+    }
+
     public int getResultaat() {
         return resultaat;
     }

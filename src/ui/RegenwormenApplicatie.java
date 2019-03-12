@@ -21,11 +21,10 @@ public class RegenwormenApplicatie {
         System.out.println("Met hoeveel spelers wil je spelen?");
         int aantalSpelers = input.nextInt();
         for (int counter = 1; counter <= aantalSpelers; counter++) {
-            eindeRonde = false;
-            Speler speler = new Speler();
+            eindeRonde = false;            
             System.out.println("Geef je naam in:");
             naam = input.next();
-            speler.setSpelerNaam(naam);
+            Speler speler = new Speler(naam);
             speler.voegNaamToe();
 
             speler.setAantalDobbelstenen(8);
@@ -67,6 +66,7 @@ public class RegenwormenApplicatie {
                             beslissing = speler.WilJeVerderSpelen(antwoord);
                             if (beslissing == true) {
                                 System.out.println("Je beëindigt je beurt met een score van " + speler.getResultaat() + " en kan een tegel nemen.");
+                                
                             }
                         }
                     } else {
