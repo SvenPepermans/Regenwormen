@@ -1,16 +1,47 @@
 package domein;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+
 
 public class Tegel
 {
+    int nummer;
     int waarde;
 
-    public Tegel(int waarde) {
-        this.waarde = waarde;
+    public Tegel(int nummer) 
+    {
+        this.nummer = nummer;
+        berekenwaarde();
+        
     }
-    
+    public void berekenwaarde()
+    {
+        if (nummer >= 21 && nummer <= 24) 
+        {
+            waarde = 1;
+        }
+        else
+        {
+            if (nummer >=25 && nummer <= 28) 
+            {
+                waarde = 2;
+            }
+            else
+            {
+                if (nummer>=29 && nummer <= 32) 
+                {
+                 waarde = 3;
+                }
+                else
+                {
+                    if (nummer >= 33 && nummer <=36) 
+                    {
+                        waarde = 4;
+                    }
+                }
+            }
+        }
+        
+    }
+
     
 }
