@@ -64,8 +64,10 @@ public class RegenwormenApplicatie {
                     System.out.printf("Je tijdelijk resultaat is: %d%n", speler.berekenResultaat());
                     if(isLeeg == false){  
                         if (speler.getResultaat() >= 21 && speler.getGekozenWaarden().contains("Worm")) {
+                           do { 
                             System.out.println("Wil je nog verder spelen? J/N ");
                             antwoord = input.next().toUpperCase();
+                            } while ('J' != (antwoord.charAt(0)) && 'N' != (antwoord.charAt(0)));
                             beslissing = speler.WilJeVerderSpelen(antwoord);
                             if (beslissing == true) {
                                 System.out.println("Je beëindigt je beurt met een score van " + speler.getResultaat() + " en kan een tegel nemen.");                             

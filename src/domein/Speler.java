@@ -16,7 +16,7 @@ public class Speler {
     private ArrayList<String> gekozenWaarden = new ArrayList<>();
     private boolean laatsteKeuze = false;
     private ArrayList<Tegel> tegels = new ArrayList<>();
-    
+
     public Speler(String spelerNaam) {
         this.spelerNaam = spelerNaam;
     }
@@ -159,14 +159,11 @@ public class Speler {
     }
 
     public boolean WilJeVerderSpelen(String antwoord) {
-        do {
-            if ("J".equals(antwoord)) {
-            } else if ("N".equals(antwoord)) {
-                setEindeRonde(true);
-                return true;
-
-            }
-        } while (!"J".equals(antwoord) && !"N".equals(antwoord));
+        if ('J' == (antwoord.charAt(0))) {
+        } else if ('N' == (antwoord.charAt(0))) {
+            setEindeRonde(true);
+            return true;
+        }
 
         return false;
     }
