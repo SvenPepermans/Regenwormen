@@ -3,6 +3,8 @@ package ui;
 import domein.Dobbelsteen;
 import domein.DomeinController;
 import domein.Speler;
+import domein.Tegel;
+import domein.TegelRij;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -20,7 +22,9 @@ public class RegenwormenApplicatie {
         String getal;
         ArrayList<Speler> spelers = new ArrayList<>();
         
-        
+        //tegelRij aanmaken
+        TegelRij tegelrij = new TegelRij();
+        tegelrij.vulTegelRij();
         //Aantal Spelers
         System.out.println("Met hoeveel spelers wil je spelen?");
         int aantalSpelers = input.nextInt();
@@ -73,7 +77,15 @@ public class RegenwormenApplicatie {
                             } while ('J' != (antwoord.charAt(0)) && 'N' != (antwoord.charAt(0)));
                             beslissing = DC.WilJeVerderSpelen(antwoord);
                             if (beslissing == true) {
-                                System.out.println("Je beëindigt je beurt met een score van " + DC.getResultaat() + " en kan een tegel nemen.");                             
+                                System.out.println("Je beëindigt je beurt met een score van " + DC.getResultaat() + " en kan een tegel nemen.");
+                                Tegel tegel = tegelrij.getTegel();
+                                tegelrij.setResultaat(DC.getResultaat()); //Resultaten anders benoemen bij vervormen naar DC.
+                                if(tegelrij.controle(tegel) == true){
+                                    tegelrij.neemTegel(tegel);
+                                } else{
+                                    tegelrij.legTegelTerug(tegel);
+                                }
+                                
                             }
                         }
                     } else {
