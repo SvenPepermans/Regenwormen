@@ -1,9 +1,9 @@
 package ui;
 
 import domein.Dobbelsteen;
+import domein.DomeinController;
 import domein.Speler;
 import java.util.Scanner;
-import domein.Tegel;
 import java.util.ArrayList;
 
 public class RegenwormenApplicatie {
@@ -19,6 +19,7 @@ public class RegenwormenApplicatie {
         String naam, antwoord;
         String getal;
         ArrayList<Speler> spelers = new ArrayList<>();
+        DomeinController DC = new DomeinController();
         
         //Aantal Spelers
         System.out.println("Met hoeveel spelers wil je spelen?");
@@ -36,9 +37,10 @@ public class RegenwormenApplicatie {
                 //Gooien
                 for (int aantalIG = 0; aantalIG < speler.getAantalDobbelstenen(); aantalIG++) {
                     Dobbelsteen dobbelsteen = new Dobbelsteen();
-                    speler.setWaarde(dobbelsteen.rolDobbelsteen());
-                    speler.voegToe();
+                    DC.setWaarde(dobbelsteen.rolDobbelsteen());
+                    DC.voegToe();
                 }
+
 
                 System.out.println(speler.getDobbelsteenWaarden());
                 //Controle of je verder kan
@@ -48,12 +50,12 @@ public class RegenwormenApplicatie {
                 }else{
                     isLeeg = false;
                 }
-                if (speler.controlerenOfJeNogVerderKan() == false) {
+                if (DC.controlerenOfJeNogVerderKan() == false) {
                     System.out.printf("Jammer, je beurt was niet succesvol. Je verliest een tegel. %n");
-                    speler.setEindeRonde(true);
-                } else if (speler.isLaatsteKeuze() == true) {
+                    DC.setEindeRonde(true);
+                } else if (DC.isLaatsteKeuze() == true) {
                     System.out.printf("Kies een geldige tegel, %s%n", (counter != aantalSpelers) ? "daarna is het de beurt aan de volgende speler" : "de ronde is gedaan.");
-                    speler.setEindeRonde(true);
+                    DC.setEindeRonde(true);
                 } else {
                     //Keuze maken                     
                     do {
@@ -61,27 +63,27 @@ public class RegenwormenApplicatie {
                         keuze = speler.voegKeuzeToe();
                     } while (keuze == false);
                     System.out.println(speler.getGekozenWaarden());
-                    System.out.printf("Je tijdelijk resultaat is: %d%n", speler.berekenResultaat());
+                    System.out.printf("Je tijdelijk resultaat is: %d%n", DC.berekenResultaat());
                     if(isLeeg == false){  
-                        if (speler.getResultaat() >= 21 && speler.getGekozenWaarden().contains("Worm")) {
+                        if (DC.getResultaat() >= 21 && speler.getGekozenWaarden().contains("Worm")) {
                            do { 
                             System.out.println("Wil je nog verder spelen? J/N ");
                             antwoord = input.next().toUpperCase();
                             } while ('J' != (antwoord.charAt(0)) && 'N' != (antwoord.charAt(0)));
-                            beslissing = speler.WilJeVerderSpelen(antwoord);
+                            beslissing = DC.WilJeVerderSpelen(antwoord);
                             if (beslissing == true) {
-                                System.out.println("Je beëindigt je beurt met een score van " + speler.getResultaat() + " en kan een tegel nemen.");                             
+                                System.out.println("Je beëindigt je beurt met een score van " + DC.getResultaat() + " en kan een tegel nemen.");                             
                             }
                         }
                     } else {
-                        System.out.println("Je beëindigt je beurt met een score van " + speler.getResultaat() + "en kan een tegel nemen.");
-                        speler.setEindeRonde(true);
+                        System.out.println("Je beëindigt je beurt met een score van " + DC.getResultaat() + "en kan een tegel nemen.");
+                        DC.setEindeRonde(true);
                     }
 
                 }
 
-                eindeRonde = speler.isEindeRonde();
-            } while (eindeRonde == false);
+                eindeRonde = DC.isEindeRonde();
+            } while (eindeRonde == false);          
         }
     }
 }
