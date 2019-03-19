@@ -37,8 +37,11 @@ public class RegenwormenApplicatie {
             spelers.add(speler);
             
             DC.zetAantalDobbelstenen(8);
+            
             do {
-
+                //Speler wordt gekozen (Het is .... zijn beurt)
+                
+                
                 //Gooien
                 for (int aantalIG = 0; aantalIG < DC.geefAantalDobbelstenen(); aantalIG++) {
                     Dobbelsteen dobbelsteen = new Dobbelsteen();
@@ -60,6 +63,12 @@ public class RegenwormenApplicatie {
                     DC.setEindeRonde(true);
                 } else if (DC.isLaatsteKeuze() == true) {
                     System.out.printf("Kies een geldige tegel, %s%n", (counter != aantalSpelers) ? "daarna is het de beurt aan de volgende speler" : "de ronde is gedaan.");
+                    DC.berekenResultaat();
+                    
+                    tegelrij.setResultaat(DC.getResultaat());
+                    Tegel tegel = tegelrij.getTegel();
+                    tegelrij.neemTegel(tegel);
+                    speler.voegTegelToe(tegel);
                     DC.setEindeRonde(true);
                 } else {
                     //Keuze maken                     
@@ -69,6 +78,7 @@ public class RegenwormenApplicatie {
                     } while (keuze == false);
                     System.out.println(DC.geefGekozenWaarden());
                     System.out.printf("Je tijdelijk resultaat is: %d%n", DC.berekenResultaat());
+                    
                     if(isLeeg == false){  
                         if (DC.getResultaat() >= 21 && DC.geefGekozenWaarden().contains("Worm")) {
                            do { 
@@ -78,25 +88,32 @@ public class RegenwormenApplicatie {
                             beslissing = DC.WilJeVerderSpelen(antwoord);
                             if (beslissing == true) {
                                 System.out.println("Je beëindigt je beurt met een score van " + DC.getResultaat() + " en kan een tegel nemen.");
-                                Tegel tegel = tegelrij.getTegel();
                                 tegelrij.setResultaat(DC.getResultaat()); //Resultaten anders benoemen bij vervormen naar DC.
+                                Tegel tegel = tegelrij.getTegel();
                                 if(tegelrij.controle(tegel) == true){
                                     tegelrij.neemTegel(tegel);
+                                    speler.voegTegelToe(tegel);
                                 } else{
                                     tegelrij.legTegelTerug(tegel);
+                                    speler.verwijderTegel(tegel);
                                 }
                                 
                             }
                         }
                     } else {
                         System.out.println("Je beëindigt je beurt met een score van " + DC.getResultaat() + "en kan een tegel nemen.");
+                        
+                        tegelrij.setResultaat(DC.getResultaat());
+                        Tegel tegel = tegelrij.getTegel();
+                        tegelrij.neemTegel(tegel);
+                        speler.voegTegelToe(tegel);                        
                         DC.setEindeRonde(true);
                     }
 
                 }
-
                 eindeRonde = DC.isEindeRonde();
-            } while (eindeRonde == false);          
+            } while (eindeRonde == false);   
+            System.out.println(speler.geefBijgehoudenTegels());            
         }
     }
 }

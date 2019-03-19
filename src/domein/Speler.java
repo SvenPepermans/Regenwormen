@@ -3,7 +3,6 @@ package domein;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
-import domein.DomeinController;
 
 public class Speler {
 
@@ -11,11 +10,21 @@ public class Speler {
     private String spelerNaam;
     private ArrayList<String> dobbelsteenWaarden = new ArrayList<>();
     private ArrayList<String> gekozenWaarden = new ArrayList<>();
+    private ArrayList<Tegel> bijgehoudenTegels = new ArrayList<>();
+    private ArrayList<Integer> tegelNummers = new ArrayList<>();
+
     private String getal;
     private int aantalDobbelstenen;
-    private String waarde;
-   
-  
+    private String waarde;    
+
+    public ArrayList<Integer> geefBijgehoudenTegels() {
+        for(int i = 0;i<bijgehoudenTegels.size();i++){
+            Tegel tegel = bijgehoudenTegels.get(i);
+            int tegelNummer = tegel.nummer;
+            tegelNummers.add(tegelNummer);
+        }
+        return tegelNummers;
+    }
     
     public Speler(String spelerNaam) {
         this.spelerNaam = spelerNaam;
@@ -89,6 +98,13 @@ public class Speler {
     public String getWaarde() {
         return waarde;
     }
-
+    
+    public void voegTegelToe(Tegel tegel){
+        bijgehoudenTegels.add(tegel);
+    }
+    
+    public void verwijderTegel(Tegel tegel){
+        bijgehoudenTegels.remove(bijgehoudenTegels.size()-1);
+    }
 }
    
