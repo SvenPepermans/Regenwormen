@@ -11,6 +11,14 @@ public class Tegel {
         berekenwaarde();
         
     }
+
+    public int getNummer() {
+        return nummer;
+    }
+
+    public void setNummer(int nummer) {
+        this.nummer = nummer;
+    }
     public void berekenwaarde() {
         if (nummer >= 21 && nummer <= 24) {
             waarde = 1;
