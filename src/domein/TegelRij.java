@@ -29,8 +29,9 @@ public class TegelRij {
 
     public boolean controle(Tegel tegel) {
         boolean controle = false;
-        int index = tegels.indexOf(tegel);
         do {
+            int index = tegels.indexOf(tegel);
+
             if (tegels.contains(tegel) && tegel.getNummer() != 0) {
                 controle = true;
                 break;
@@ -40,7 +41,7 @@ public class TegelRij {
             } else {
                 tegel = tegels.get(index - 1);
             }
-        } while (index >= 0);
+        } while (tegel.getNummer() > 21);
         return controle;
     }
 
@@ -51,16 +52,21 @@ public class TegelRij {
         } else {
             int index = tegels.indexOf(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())));
             tegels.set(index, tegel);
-            tegel.setNummer(0);
+            tegel.setNummer(-1);
         }
     }
-    
-    public void neemTegel(Tegel tegel){
-        for(int i = 0; i <= tegels.size(); i++){
-            if( i == resultaat - 21){
-                tegels.set(i, tegel);
+
+    public void neemTegel(Tegel tegel) {
+        do {
+            int index = tegels.indexOf(tegel);
+
+            if (tegel.getNummer() == 0 || tegel.getNummer() == -1) {
+                tegel = tegels.get(index - 1);
+            } else{
+                tegels.set(index, tegel);
                 tegel.setNummer(0);
             }
-        }
+        } while (tegel.getNummer() > 21);
     }
 }
+// IS EINDE SPEL MOET HIER TOEGEVOEGD WORDEN
