@@ -8,14 +8,11 @@ import domein.Speler;
 public class DomeinController
 {
      private boolean eindeRonde;
-     private boolean laatsteKeuze = false;   
-
-     private String waarde;
-     
+     private boolean laatsteKeuze = false;    
      private int resultaat;     
      Speler speler = new Speler();
     
-    public DomeinController(){
+    public DomeinController(Speler speler){
         
     }
      
@@ -34,8 +31,9 @@ public class DomeinController
     public void setResultaat(int resultaat) {
         this.resultaat = resultaat;
     }
-    public void voegToe() {
-        speler.getDobbelsteenWaarden().add(waarde);
+    
+    public void voegDWToe() {
+        speler.voegDobbelsteenWaardenToe();
     }
 
     public int berekenResultaat() {
@@ -71,14 +69,10 @@ public class DomeinController
         return false;
     }
 
-    public void setWaarde(String waarde) {
-        this.waarde = waarde;
-    }
+    public void zetWaarde(String waarde){
+      speler.setWaarde(waarde);
+  }
 
-    public String getWaarde() {
-        return waarde;
-    }
-    
     public boolean isLaatsteKeuze() {
         return laatsteKeuze;
     }
@@ -117,6 +111,24 @@ public class DomeinController
         return controle;
     }
      
-   
+    public ArrayList<String> geefDobbelsteenWaarden(){
+      return speler.getDobbelsteenWaarden();
+   }
+     
+    public void zetAantalDobbelstenen(int aantal){
+        speler.setAantalDobbelstenen(aantal);
+    }
+    
+    public int geefAantalDobbelstenen(){
+        return speler.getAantalDobbelstenen();
+    }
+    
+    public boolean addChoice(){
+        return speler.voegKeuzeToe();
+    }
+    
+    public ArrayList<String> geefGekozenWaarden(){
+        return speler.getGekozenWaarden();
+    }
 }
 

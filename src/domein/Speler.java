@@ -3,6 +3,7 @@ package domein;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+import domein.DomeinController;
 
 public class Speler {
 
@@ -12,6 +13,8 @@ public class Speler {
     private ArrayList<String> gekozenWaarden = new ArrayList<>();
     private String getal;
     private int aantalDobbelstenen;
+    private String waarde;
+   
   
     
     public Speler(String spelerNaam) {
@@ -73,6 +76,18 @@ public class Speler {
         }
         return true;
 
+    }
+
+     public void voegDobbelsteenWaardenToe(){          
+         dobbelsteenWaarden.add(waarde);
+     }
+     
+       public void setWaarde(String waarde) {
+        this.waarde = waarde;
+    }
+
+    public String getWaarde() {
+        return waarde;
     }
 
 }

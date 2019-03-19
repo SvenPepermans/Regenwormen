@@ -19,7 +19,7 @@ public class RegenwormenApplicatie {
         String naam, antwoord;
         String getal;
         ArrayList<Speler> spelers = new ArrayList<>();
-        DomeinController DC = new DomeinController();
+        
         
         //Aantal Spelers
         System.out.println("Met hoeveel spelers wil je spelen?");
@@ -29,22 +29,23 @@ public class RegenwormenApplicatie {
             System.out.println("Geef je naam in:");
             naam = input.next();
             Speler speler = new Speler(naam);
+            DomeinController DC = new DomeinController(speler);
             spelers.add(speler);
             
-            speler.setAantalDobbelstenen(8);
+            DC.zetAantalDobbelstenen(8);
             do {
 
                 //Gooien
-                for (int aantalIG = 0; aantalIG < speler.getAantalDobbelstenen(); aantalIG++) {
+                for (int aantalIG = 0; aantalIG < DC.geefAantalDobbelstenen(); aantalIG++) {
                     Dobbelsteen dobbelsteen = new Dobbelsteen();
-                    DC.setWaarde(dobbelsteen.rolDobbelsteen());
-                    DC.voegToe();
+                    DC.zetWaarde(dobbelsteen.rolDobbelsteen());
+                    DC.voegDWToe();
                 }
 
 
-                System.out.println(speler.getDobbelsteenWaarden());
+                System.out.println(DC.geefDobbelsteenWaarden());
                 //Controle of je verder kan
-                if ((speler.getDobbelsteenWaarden().isEmpty()))
+                if ((DC.geefDobbelsteenWaarden().isEmpty()))
                 {
                     isLeeg = true;
                 }else{
@@ -60,12 +61,12 @@ public class RegenwormenApplicatie {
                     //Keuze maken                     
                     do {
                         System.out.println("Welk getal wil je bij je houden?");
-                        keuze = speler.voegKeuzeToe();
+                        keuze = DC.addChoice();
                     } while (keuze == false);
-                    System.out.println(speler.getGekozenWaarden());
+                    System.out.println(DC.geefGekozenWaarden());
                     System.out.printf("Je tijdelijk resultaat is: %d%n", DC.berekenResultaat());
                     if(isLeeg == false){  
-                        if (DC.getResultaat() >= 21 && speler.getGekozenWaarden().contains("Worm")) {
+                        if (DC.getResultaat() >= 21 && DC.geefGekozenWaarden().contains("Worm")) {
                            do { 
                             System.out.println("Wil je nog verder spelen? J/N ");
                             antwoord = input.next().toUpperCase();
