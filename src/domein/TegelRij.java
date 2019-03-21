@@ -31,7 +31,8 @@ public class TegelRij {
         boolean controle = false;
         do {
             int index = tegels.indexOf(tegel);
-
+            tegel = tegels.get(index);
+            
             if (tegels.contains(tegel) && tegel.getNummer() != 0) {
                 controle = true;
                 break;
@@ -39,34 +40,36 @@ public class TegelRij {
                 controle = false;
                 break;
             } else {
-                tegel = tegels.get(index - 1);
-            }
+                index = index - 1;
+            } 
         } while (tegel.getNummer() > 21);
         return controle;
     }
 
-    public void legTegelTerug(Tegel tegel) { // Verwijder tegel????
+    public void legTegelTerug(Speler speler) { // Verwijder tegel????
         if (tegels.contains(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())))) {
             int index = tegels.indexOf(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())));
-            tegels.set(index, tegel);
+            tegels.set(index, speler.bovensteTegel());
         } else {
             int index = tegels.indexOf(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())));
-            tegels.set(index, tegel);
-            tegel.setNummer(-1);
+            Tegel omgedraaideTegel = new Tegel(-1);
+            tegels.set(index, omgedraaideTegel);
         }
     }
 
-    public void neemTegel(Tegel tegel) {
+    public Tegel neemTegel(Tegel tegel) {
         do {
             int index = tegels.indexOf(tegel);
-
             if (tegel.getNummer() == 0 || tegel.getNummer() == -1) {
                 tegel = tegels.get(index - 1);
             } else{
-                tegels.set(index, tegel);
-                tegel.setNummer(0);
+                Tegel legeTegel = new Tegel(0);
+                tegel = tegels.get(index);
+                tegels.set(index, legeTegel);
+                break;
             }
         } while (tegel.getNummer() > 21);
+        return tegel;
     }
 }
 // IS EINDE SPEL MOET HIER TOEGEVOEGD WORDEN

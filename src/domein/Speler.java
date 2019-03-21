@@ -18,11 +18,11 @@ public class Speler {
     private String waarde;    
 
     public ArrayList<Integer> geefBijgehoudenTegels() {
-        for(int i = 0;i<bijgehoudenTegels.size();i++){
-            Tegel tegel = bijgehoudenTegels.get(i);
-            int tegelNummer = tegel.nummer;
-            tegelNummers.add(tegelNummer);
-        }
+        int i = tegelNummers.size();
+        Tegel tegel = bijgehoudenTegels.get(i);
+        int tegelNummer = tegel.nummer;
+        tegelNummers.add(tegelNummer);
+        
         return tegelNummers;
     }
     
@@ -103,8 +103,13 @@ public class Speler {
         bijgehoudenTegels.add(tegel);
     }
     
-    public void verwijderTegel(Tegel tegel){
+    public void verwijderTegel(){
         bijgehoudenTegels.remove(bijgehoudenTegels.size()-1);
+    }
+    
+    public Tegel bovensteTegel(){
+        Tegel tegel = bijgehoudenTegels.get(bijgehoudenTegels.size()-1);
+        return tegel;
     }
 }
    
