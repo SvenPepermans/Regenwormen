@@ -8,17 +8,12 @@ public class TegelRij {
 
     private ArrayList<Tegel> tegels = new ArrayList<>();
     int resultaat;
-
-    public void setResultaat(int resultaat) {
-        this.resultaat = resultaat;
+    Speler speler = new Speler();
+    
+    public int getResultaat(){
+        return resultaat;
     }
-
-    public Tegel getTegel() {
-        int index = resultaat - 21;
-        Tegel tegel = tegels.get(index);
-        return tegel;
-    }
-
+    
     public void vulTegelRij() {
         for (int i = 21; i <= 36; i++) {
             Tegel tegel = new Tegel(i);
@@ -71,5 +66,14 @@ public class TegelRij {
         } while (tegel.getNummer() > 21);
         return tegel;
     }
+    
+     public Tegel getTegel() {
+       
+         int index = resultaat - 21;
+        Tegel tegel = tegels.get(index);
+        return tegel;
+    }
+    
+    
 }
 // IS EINDE SPEL MOET HIER TOEGEVOEGD WORDEN

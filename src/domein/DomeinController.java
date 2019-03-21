@@ -8,7 +8,12 @@ public class DomeinController
      private boolean laatsteKeuze = false;    
      private int resultaat;     
      Speler speler = new Speler();
+     TegelRij tegelrij = new TegelRij();
     
+     public DomeinController(){
+         
+     }
+     
     public DomeinController(Speler speler){
         
     }
@@ -34,7 +39,7 @@ public class DomeinController
     }
 
     public int berekenResultaat() {
-        resultaat = 0;
+       
         for (int teller = 0; teller < speler.getGekozenWaarden().size(); teller++) {
             switch (speler.getGekozenWaarden().get(teller)) {
                 case "1":
@@ -56,7 +61,7 @@ public class DomeinController
         return resultaat;
     }
     
-    public boolean WilJeVerderSpelen(String antwoord) {
+    public boolean wilJeVerderSpelen(String antwoord) {
         if ('J' == (antwoord.charAt(0))) {
         } else if ('N' == (antwoord.charAt(0))) {
             setEindeRonde(true);
@@ -127,5 +132,42 @@ public class DomeinController
     public ArrayList<String> geefGekozenWaarden(){
         return speler.getGekozenWaarden();
     }
+    
+   public Tegel geefTegel(){
+       return tegelrij.getTegel();
+   }
+    
+    public void legTegelTerug(Speler speler){
+        tegelrij.legTegelTerug(speler);
+    }
+    
+    public void verwijderTegel(){
+        speler.verwijderTegel();
+    }
+    
+    public Tegel neemTegel(Tegel tegel){
+        return tegelrij.neemTegel(tegel);
+    }
+    
+    public void voegTegelToe(Tegel tegel){
+        speler.voegTegelToe(tegel);
+    }
+    
+    public boolean controle(Tegel tegel){
+        return tegelrij.controle(tegel);
+    }
+    
+    public void vulTegelRij(){
+        tegelrij.vulTegelRij();
+    }
+    
+    public String geefSpelerNaam(){
+      return speler.getSpelerNaam();
+    }
+    
+    public ArrayList<Integer> geefBijgehoudenTegels(){
+        return speler.geefBijgehoudenTegels();
+    }
+    
 }
 
