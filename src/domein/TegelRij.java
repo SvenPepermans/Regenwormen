@@ -9,11 +9,11 @@ public class TegelRij {
     private ArrayList<Tegel> tegels = new ArrayList<>();
     int resultaat;
     Speler speler = new Speler();
-    
-    public int getResultaat(){
+
+    public int getResultaat() {
         return resultaat;
     }
-    
+
     public void vulTegelRij() {
         for (int i = 21; i <= 36; i++) {
             Tegel tegel = new Tegel(i);
@@ -24,11 +24,11 @@ public class TegelRij {
 
     public boolean controle(Tegel tegel) {
         boolean controle = false;
+        int index = tegels.indexOf(tegel);
+
         do {
-            int index = tegels.indexOf(tegel);
-            tegel = tegels.get(index);
-            
-            if (tegels.contains(tegel) && tegel.getNummer() != 0) {
+
+            if (tegels.contains(tegel)) {
                 controle = true;
                 break;
             } else if (index < 0) {
@@ -36,19 +36,26 @@ public class TegelRij {
                 break;
             } else {
                 index = index - 1;
-            } 
-        } while (tegel.getNummer() > 21);
+                tegel = tegels.get(index);  
+            }
+        } while (tegel.getNummer() == 0);
         return controle;
     }
 
-    public void legTegelTerug(Speler speler) { // Verwijder tegel????
-        if (tegels.contains(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())))) {
-            int index = tegels.indexOf(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())));
-            tegels.set(index, speler.bovensteTegel());
-        } else {
+    public void legTegelTerug(Speler speler, Tegel tegel) { // Verwijder tegel????
+        if (tegel == null) {
             int index = tegels.indexOf(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())));
             Tegel omgedraaideTegel = new Tegel(-1);
-            tegels.set(index, omgedraaideTegel);
+            tegels.set(index, omgedraaideTegel);            
+        } else if (tegels.contains(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())))) {
+            int index = tegels.indexOf(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())));
+            tegels.set(index, tegel);
+        } else {
+            int maxIndex = tegels.indexOf(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())));
+            int tegelIndex = tegel.getNummer() - 21 ;
+            Tegel omgedraaideTegel = new Tegel(-1);
+            tegels.set(maxIndex, omgedraaideTegel);
+            tegels.set(tegelIndex, tegel);
         }
     }
 
@@ -57,23 +64,22 @@ public class TegelRij {
             int index = tegels.indexOf(tegel);
             if (tegel.getNummer() == 0 || tegel.getNummer() == -1) {
                 tegel = tegels.get(index - 1);
-            } else{
+            } else {
                 Tegel legeTegel = new Tegel(0);
                 tegel = tegels.get(index);
                 tegels.set(index, legeTegel);
                 break;
             }
-        } while (tegel.getNummer() > 21);
+        } while (tegel.getNummer() == 0 || tegel.getNummer() == -1);
         return tegel;
     }
-    
-     public Tegel getTegel() {
-       
-         int index = resultaat - 21;
+
+    public Tegel getTegel(int resultaat) {
+
+        int index = resultaat - 21;
         Tegel tegel = tegels.get(index);
         return tegel;
     }
-    
-    
+
 }
 // IS EINDE SPEL MOET HIER TOEGEVOEGD WORDEN

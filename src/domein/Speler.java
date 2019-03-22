@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class Speler {
 
-
     private String spelerNaam;
     private ArrayList<String> dobbelsteenWaarden = new ArrayList<>();
     private ArrayList<String> gekozenWaarden = new ArrayList<>();
@@ -15,23 +14,26 @@ public class Speler {
 
     private String getal;
     private int aantalDobbelstenen;
-    private String waarde;    
+    private String waarde;
 
     public ArrayList<Integer> geefBijgehoudenTegels() {
+        if(bijgehoudenTegels.isEmpty()){
+            
+        } else {
         int i = tegelNummers.size();
         Tegel tegel = bijgehoudenTegels.get(i);
         int tegelNummer = tegel.nummer;
         tegelNummers.add(tegelNummer);
-        
+        }
         return tegelNummers;
     }
-    
+
     public Speler(String spelerNaam) {
         this.spelerNaam = spelerNaam;
     }
-    
-    public Speler(){
-        
+
+    public Speler() {
+
     }
 
     public String getSpelerNaam() {
@@ -41,8 +43,8 @@ public class Speler {
     public void setSpelerNaam(String spelerNaam) {
         this.spelerNaam = spelerNaam;
     }
-    
-     public ArrayList<String> getDobbelsteenWaarden() {
+
+    public ArrayList<String> getDobbelsteenWaarden() {
         return dobbelsteenWaarden;
     }
 
@@ -53,15 +55,15 @@ public class Speler {
     public ArrayList<String> getGekozenWaarden() {
         return gekozenWaarden;
     }
-    
-     public String getGetal() {
+
+    public String getGetal() {
         return getal;
     }
 
     public void setGetal(String getal) {
         this.getal = getal;
     }
-   
+
     public void setAantalDobbelstenen(int aantal) {
         this.aantalDobbelstenen = aantal;
     }
@@ -69,8 +71,8 @@ public class Speler {
     public int getAantalDobbelstenen() {
         return aantalDobbelstenen;
     }
-    
-     public boolean voegKeuzeToe() {
+
+    public boolean voegKeuzeToe() {
         Scanner input = new Scanner(System.in);
 
         do {
@@ -87,29 +89,37 @@ public class Speler {
 
     }
 
-     public void voegDobbelsteenWaardenToe(){          
-         dobbelsteenWaarden.add(waarde);
-     }
-     
-       public void setWaarde(String waarde) {
+    public void voegDobbelsteenWaardenToe() {
+        dobbelsteenWaarden.add(waarde);
+    }
+
+    public void setWaarde(String waarde) {
         this.waarde = waarde;
     }
 
     public String getWaarde() {
         return waarde;
     }
-    
-    public void voegTegelToe(Tegel tegel){
+
+    public void voegTegelToe(Tegel tegel) {
         bijgehoudenTegels.add(tegel);
     }
-    
-    public void verwijderTegel(){
-        bijgehoudenTegels.remove(bijgehoudenTegels.size()-1);
+
+    public void verwijderTegel() {
+        if (bijgehoudenTegels.isEmpty()) {
+
+        } else {
+            bijgehoudenTegels.remove(bijgehoudenTegels.size() - 1);
+        }
     }
-    
-    public Tegel bovensteTegel(){
-        Tegel tegel = bijgehoudenTegels.get(bijgehoudenTegels.size()-1);
+
+    public Tegel bovensteTegel() {
+        Tegel tegel;
+        if (bijgehoudenTegels.isEmpty()) {
+            return null;
+        } else {
+            tegel = bijgehoudenTegels.get(bijgehoudenTegels.size() - 1);
+        }
         return tegel;
     }
 }
-   

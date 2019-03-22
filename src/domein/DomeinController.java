@@ -2,22 +2,22 @@ package domein;
 
 import java.util.ArrayList;
 
-public class DomeinController
-{
-     private boolean eindeRonde;
-     private boolean laatsteKeuze = false;    
-     private int resultaat;     
-     Speler speler = new Speler();
-     TegelRij tegelrij = new TegelRij();
-    
-     public DomeinController(){
-         
-     }
-     
-    public DomeinController(Speler speler){
-        
+public class DomeinController {
+
+    private boolean eindeRonde;
+    private boolean laatsteKeuze = false;
+    private int resultaat;
+    Speler speler = new Speler();
+    TegelRij tegelrij = new TegelRij();
+
+    public DomeinController() {
+
     }
-     
+
+    public DomeinController(Speler speler) {
+
+    }
+
     public boolean isEindeRonde() {
         return eindeRonde;
     }
@@ -25,7 +25,7 @@ public class DomeinController
     public void setEindeRonde(boolean eindeRonde) {
         this.eindeRonde = eindeRonde;
     }
-     
+
     public int getResultaat() {
         return resultaat;
     }
@@ -33,13 +33,13 @@ public class DomeinController
     public void setResultaat(int resultaat) {
         this.resultaat = resultaat;
     }
-    
+
     public void voegDWToe() {
         speler.voegDobbelsteenWaardenToe();
     }
 
     public int berekenResultaat() {
-       
+
         for (int teller = 0; teller < speler.getGekozenWaarden().size(); teller++) {
             switch (speler.getGekozenWaarden().get(teller)) {
                 case "1":
@@ -60,7 +60,7 @@ public class DomeinController
         }
         return resultaat;
     }
-    
+
     public boolean wilJeVerderSpelen(String antwoord) {
         if ('J' == (antwoord.charAt(0))) {
         } else if ('N' == (antwoord.charAt(0))) {
@@ -71,18 +71,17 @@ public class DomeinController
         return false;
     }
 
-    public void zetWaarde(String waarde){
-      speler.setWaarde(waarde);
-  }
+    public void zetWaarde(String waarde) {
+        speler.setWaarde(waarde);
+    }
 
     public boolean isLaatsteKeuze() {
         return laatsteKeuze;
     }
-    
+
     public boolean controlerenOfJeNogVerderKan() {
         int aantalGelijk = 0;
         boolean controle = true;
-      
 
         for (int index = 0; index < speler.getDobbelsteenWaarden().size(); index++) {
             String gelijkeWaarde = speler.getDobbelsteenWaarden().get(index);
@@ -112,62 +111,68 @@ public class DomeinController
 
         return controle;
     }
-     
-    public ArrayList<String> geefDobbelsteenWaarden(){
-      return speler.getDobbelsteenWaarden();
-   }
-     
-    public void zetAantalDobbelstenen(int aantal){
+
+    public ArrayList<String> geefDobbelsteenWaarden() {
+        return speler.getDobbelsteenWaarden();
+    }
+
+    public void zetAantalDobbelstenen(int aantal) {
         speler.setAantalDobbelstenen(aantal);
     }
-    
-    public int geefAantalDobbelstenen(){
+
+    public int geefAantalDobbelstenen() {
         return speler.getAantalDobbelstenen();
     }
-    
-    public boolean addChoice(){
+
+    public boolean addChoice() {
         return speler.voegKeuzeToe();
     }
-    
-    public ArrayList<String> geefGekozenWaarden(){
+
+    public ArrayList<String> geefGekozenWaarden() {
         return speler.getGekozenWaarden();
     }
-    
-   public Tegel geefTegel(){
-       return tegelrij.getTegel();
-   }
-    
-    public void legTegelTerug(Speler speler){
-        tegelrij.legTegelTerug(speler);
+
+    public Tegel geefTegel(int resultaat) {
+        return tegelrij.getTegel(resultaat);
     }
-    
-    public void verwijderTegel(){
+
+    public void legTegelTerug(Speler speler,Tegel tegel) {
+        if(speler.geefBijgehoudenTegels().isEmpty()){
+            tegel = null;
+        }
+        tegelrij.legTegelTerug(speler, tegel);
+    }
+
+    public void verwijderTegel() {
         speler.verwijderTegel();
     }
-    
-    public Tegel neemTegel(Tegel tegel){
+
+    public Tegel neemTegel(Tegel tegel) {
         return tegelrij.neemTegel(tegel);
     }
-    
-    public void voegTegelToe(Tegel tegel){
+
+    public void voegTegelToe(Tegel tegel) {
         speler.voegTegelToe(tegel);
     }
-    
-    public boolean controle(Tegel tegel){
+
+    public boolean controle(Tegel tegel) {
         return tegelrij.controle(tegel);
     }
-    
-    public void vulTegelRij(){
+
+    public void vulTegelRij() {
         tegelrij.vulTegelRij();
     }
-    
-    public String geefSpelerNaam(){
-      return speler.getSpelerNaam();
+
+    public String geefSpelerNaam() {
+        return speler.getSpelerNaam();
     }
-    
-    public ArrayList<Integer> geefBijgehoudenTegels(){
+
+    public ArrayList<Integer> geefBijgehoudenTegels() {
         return speler.geefBijgehoudenTegels();
     }
     
+    public Tegel geefBovensteTegel(){
+       Tegel tegel = speler.bovensteTegel();
+       return tegel;
+    }
 }
-
