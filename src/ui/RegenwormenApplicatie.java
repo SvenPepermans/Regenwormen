@@ -13,6 +13,7 @@ public class RegenwormenApplicatie {
 
         Scanner input = new Scanner(System.in);
         int index = 0;
+        int ronde = 1;
         boolean eindeSpel = false;
         boolean eindeRonde = false;
         boolean keuze = false;
@@ -21,6 +22,7 @@ public class RegenwormenApplicatie {
         String naam, antwoord;
         String getal;
         ArrayList<Speler> spelers = new ArrayList<>();
+        Tegel tegel = null;
 
         //Aantal Spelers
         System.out.println("Met hoeveel spelers wil je spelen?");
@@ -36,13 +38,13 @@ public class RegenwormenApplicatie {
         //tegelRij aanmaken
         DomeinController Dc = new DomeinController();
         Dc.vulTegelRij();
+        System.out.println("We beginnen met ronde 1:");
         do {
-            int counter = spelers.size();
             // Speler kiezen
             Speler speler = spelers.get(index);
-            String spelerNaam = speler.getSpelerNaam();
-            System.out.println("Het is de beurt van " + spelerNaam);
             DomeinController DC = new DomeinController(speler);
+            String spelerNaam = DC.geefSpelerNaam(speler);
+            System.out.println("Het is de beurt van " + spelerNaam);
             //Dobbelstenen naar 8
             DC.zetAantalDobbelstenen(8);
 
@@ -61,18 +63,16 @@ public class RegenwormenApplicatie {
                     Tegel bovensteTegel = Dc.geefBovensteTegel();
                     System.out.println("Jammer, je beurt was niet succesvol. Je verliest een tegel.");
                     Dc.legTegelTerug(speler, bovensteTegel);
-                    DC.verwijderTegel();
+                    DC.verwijderTegel(speler);
                     DC.setEindeRonde(true);
-                    System.out.println(DC.geefBijgehoudenTegels());
 
                 } else if (DC.isLaatsteKeuze() == true) {
                     System.out.println("Je beëindigt je beurt met een score van " + DC.getResultaat() + " en kan een tegel nemen.");
                     DC.setResultaat(DC.getResultaat());
-                    Tegel tegel = Dc.geefTegel(DC.getResultaat());
+                    tegel = Dc.geefTegel(DC.getResultaat());
                     Dc.neemTegel(tegel);
-                    DC.voegTegelToe(tegel);
+                    DC.voegTegelToe(tegel, speler);
                     DC.setEindeRonde(true);
-                    System.out.println(DC.geefBijgehoudenTegels());
 
                 } else {
                     //Keuze maken                     
@@ -93,26 +93,23 @@ public class RegenwormenApplicatie {
                             if (beslissing == true) {
                                 System.out.println("Je beëindigt je beurt met een score van " + DC.getResultaat());
                                 DC.setResultaat(DC.getResultaat()); //Resultaten anders benoemen bij vervormen naar DC.
-                                Tegel tegel = Dc.geefTegel(DC.getResultaat());
+                                tegel = Dc.geefTegel(DC.getResultaat());
                                 if (Dc.controle(tegel) == true) {
                                     tegel = Dc.neemTegel(tegel);
                                     if (tegel == null) {
                                         System.out.println("Er zijn geen tegels meer, je moet een tegel terugleggen");
                                         Tegel bovensteTegel = DC.geefBovensteTegel();
                                         Dc.legTegelTerug(speler, bovensteTegel);
-                                        DC.verwijderTegel();
-                                        System.out.println(DC.geefBijgehoudenTegels());
+                                        DC.verwijderTegel(speler);
                                     } else {
                                         System.out.println("Er is nog een mogelijke tegel aanwezig.");
-                                        DC.voegTegelToe(tegel);
-                                        System.out.println(DC.geefBijgehoudenTegels());
+                                        DC.voegTegelToe(tegel, speler);
                                     }
 
                                 } else {
                                     Tegel bovensteTegel = DC.geefBovensteTegel();
                                     Dc.legTegelTerug(speler, bovensteTegel);
-                                    DC.verwijderTegel();
-                                    System.out.println(DC.geefBijgehoudenTegels());
+                                    DC.verwijderTegel(speler);
 
                                 }
 
@@ -122,24 +119,25 @@ public class RegenwormenApplicatie {
                         System.out.println("Je beëindigt je beurt met een score van " + DC.getResultaat() + "en kan een tegel nemen.");
 
                         DC.setResultaat(DC.getResultaat());
-                        Tegel tegel = Dc.geefTegel(DC.getResultaat());
+                        tegel = Dc.geefTegel(DC.getResultaat());
                         Dc.neemTegel(tegel);
-                        DC.voegTegelToe(tegel);
+                        DC.voegTegelToe(tegel, speler);
                         DC.setEindeRonde(true);
-                        System.out.println(DC.geefBijgehoudenTegels());
 
                     }
 
                 }
                 eindeRonde = DC.isEindeRonde();
             } while (eindeRonde == false);
-            System.out.println("Volgende Ronde: ");
+            System.out.println(DC.geefBijgehoudenTegels(speler, tegel));
             if (index + 1 < aantalSpelers) {
                 index++;
             } else {
+                ronde++;
+                System.out.println("We beginnen nu met ronde " + ronde + ": ");
                 index = 0;
             }
-
+            eindeSpel = DC.isEindeSpel();
         } while (eindeSpel == false);
 
     }

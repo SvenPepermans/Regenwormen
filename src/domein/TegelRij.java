@@ -85,6 +85,17 @@ public class TegelRij {
         Tegel tegel = tegels.get(index);
         return tegel;
     }
-
+    public boolean isEindeSpel(){
+        boolean eindeSpel = false;
+        for(int index = 0; index < tegels.size();index++)
+            if(tegels.get(index).nummer >= 21){
+                eindeSpel = false;
+                break;
+            } else{
+                eindeSpel = true;
+            }
+        return eindeSpel;
+    }
 }
+
 // IS EINDE SPEL MOET HIER TOEGEVOEGD WORDEN

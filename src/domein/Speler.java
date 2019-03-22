@@ -16,18 +16,6 @@ public class Speler {
     private int aantalDobbelstenen;
     private String waarde;
 
-    public ArrayList<Integer> geefBijgehoudenTegels() {
-        if(bijgehoudenTegels.isEmpty()){
-            
-        } else {
-        int i = tegelNummers.size();
-        Tegel tegel = bijgehoudenTegels.get(i);
-        int tegelNummer = tegel.nummer;
-        tegelNummers.add(tegelNummer);
-        }
-        return tegelNummers;
-    }
-
     public Speler(String spelerNaam) {
         this.spelerNaam = spelerNaam;
     }
@@ -110,6 +98,7 @@ public class Speler {
 
         } else {
             bijgehoudenTegels.remove(bijgehoudenTegels.size() - 1);
+            tegelNummers.remove(tegelNummers.size()-1);
         }
     }
 
@@ -121,5 +110,26 @@ public class Speler {
             tegel = bijgehoudenTegels.get(bijgehoudenTegels.size() - 1);
         }
         return tegel;
+    }
+
+    public ArrayList<Integer> geefBijgehoudenTegels(Tegel tegel) {
+        if (bijgehoudenTegels.isEmpty()) {
+
+        } else {
+            //int i = tegelNummers.size();
+            //Tegel tegel = bijgehoudenTegels.get(i);
+            // int tegelNummer = tegel.nummer;
+            if (tegel == null) {
+
+            } else {
+                tegelNummers.add(tegel.getNummer());
+            }
+        }
+        return tegelNummers;
+    }
+
+    public int bijgehoudenTegelsLengte() {
+        int lengte = bijgehoudenTegels.size();
+        return lengte;
     }
 }
