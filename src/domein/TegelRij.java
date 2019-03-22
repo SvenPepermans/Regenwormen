@@ -63,14 +63,19 @@ public class TegelRij {
         do {
             int index = tegels.indexOf(tegel);
             if (tegel.getNummer() == 0 || tegel.getNummer() == -1) {
-                tegel = tegels.get(index - 1);
+                if(index <= 0){
+                    tegel = null;
+                    break;
+                } else{
+                tegel = tegels.get(index - 1);                    
+                }
             } else {
                 Tegel legeTegel = new Tegel(0);
                 tegel = tegels.get(index);
                 tegels.set(index, legeTegel);
                 break;
             }
-        } while (tegel.getNummer() == 0 || tegel.getNummer() == -1);
+        } while (tegel.getNummer() >= 21|| tegel.getNummer() == 0 || tegel.getNummer() == -1);
         return tegel;
     }
 
