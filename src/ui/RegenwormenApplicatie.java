@@ -6,6 +6,7 @@ import domein.Speler;
 import domein.Tegel;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class RegenwormenApplicatie {
 
@@ -128,6 +129,7 @@ public class RegenwormenApplicatie {
 
                 }
                 eindeRonde = DC.isEindeRonde();
+                eindeSpel = Dc.isEindeSpel();
             } while (eindeRonde == false);
             System.out.println(DC.geefBijgehoudenTegels(speler, tegel));
             if (index + 1 < aantalSpelers) {
@@ -137,8 +139,21 @@ public class RegenwormenApplicatie {
                 System.out.println("We beginnen nu met ronde " + ronde + ": ");
                 index = 0;
             }
-            eindeSpel = DC.isEindeSpel();
         } while (eindeSpel == false);
-
+        //PUNTENBEREKENING
+        int score = 0;
+        int hoogsteScore = 0;
+        String winnaar = null;
+        for(index = 0; index < spelers.size()-1;index++){   
+            Speler speler = spelers.get(index);
+            score = speler.berekenEindResultaat();
+            if(score > hoogsteScore){
+                hoogsteScore = score;
+                winnaar = spelers.get(index).getSpelerNaam();                
+            }
+        }
+        
+        
+        System.out.println("Het spel is voorbij! De winnaar is : " + winnaar + " Met een score van: " + hoogsteScore );
     }
 }

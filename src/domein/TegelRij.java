@@ -36,7 +36,7 @@ public class TegelRij {
                 break;
             } else {
                 index = index - 1;
-                tegel = tegels.get(index);  
+                tegel = tegels.get(index);
             }
         } while (tegel.getNummer() == 0);
         return controle;
@@ -46,13 +46,13 @@ public class TegelRij {
         if (tegel == null) {
             int index = tegels.indexOf(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())));
             Tegel omgedraaideTegel = new Tegel(-1);
-            tegels.set(index, omgedraaideTegel);            
+            tegels.set(index, omgedraaideTegel);
         } else if (tegels.contains(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())))) {
             int index = tegels.indexOf(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())));
             tegels.set(index, tegel);
         } else {
             int maxIndex = tegels.indexOf(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())));
-            int tegelIndex = tegel.getNummer() - 21 ;
+            int tegelIndex = tegel.getNummer() - 21;
             Tegel omgedraaideTegel = new Tegel(-1);
             tegels.set(maxIndex, omgedraaideTegel);
             tegels.set(tegelIndex, tegel);
@@ -63,11 +63,11 @@ public class TegelRij {
         do {
             int index = tegels.indexOf(tegel);
             if (tegel.getNummer() == 0 || tegel.getNummer() == -1) {
-                if(index <= 0){
+                if (index <= 0) {
                     tegel = null;
                     break;
-                } else{
-                tegel = tegels.get(index - 1);                    
+                } else {
+                    tegel = tegels.get(index - 1);
                 }
             } else {
                 Tegel legeTegel = new Tegel(0);
@@ -75,7 +75,7 @@ public class TegelRij {
                 tegels.set(index, legeTegel);
                 break;
             }
-        } while (tegel.getNummer() >= 21|| tegel.getNummer() == 0 || tegel.getNummer() == -1);
+        } while (tegel.getNummer() >= 21 || tegel.getNummer() == 0 || tegel.getNummer() == -1);
         return tegel;
     }
 
@@ -85,17 +85,19 @@ public class TegelRij {
         Tegel tegel = tegels.get(index);
         return tegel;
     }
-    public boolean isEindeSpel(){
+
+    public boolean isEindeSpel() { 
         boolean eindeSpel = false;
-        for(int index = 0; index < tegels.size();index++)
-            if(tegels.get(index).nummer >= 21){
+        for (int index = 0; index < tegels.size(); index++) {
+            if (tegels.get(index).nummer >= 21) {
                 eindeSpel = false;
                 break;
-            } else{
+            } else {
                 eindeSpel = true;
             }
+        }
         return eindeSpel;
     }
+    
 }
 
-// IS EINDE SPEL MOET HIER TOEGEVOEGD WORDEN

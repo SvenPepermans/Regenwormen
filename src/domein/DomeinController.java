@@ -179,4 +179,8 @@ public class DomeinController {
         boolean eindeSpel= tegelrij.isEindeSpel();
         return eindeSpel;
     }
+    public int berekenEindResultaat(){
+        int eindResultaat = speler.berekenEindResultaat();
+        return eindResultaat;
+    }
 }

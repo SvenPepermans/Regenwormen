@@ -15,6 +15,7 @@ public class Speler {
     private String getal;
     private int aantalDobbelstenen;
     private String waarde;
+    private int eindResultaat;
 
     public Speler(String spelerNaam) {
         this.spelerNaam = spelerNaam;
@@ -131,5 +132,13 @@ public class Speler {
     public int bijgehoudenTegelsLengte() {
         int lengte = bijgehoudenTegels.size();
         return lengte;
+    }
+    
+    public int berekenEindResultaat(){
+        
+        for(int index = 0;index<bijgehoudenTegels.size()-1;index++){
+            eindResultaat = eindResultaat + bijgehoudenTegels.get(index).waarde;
+        }
+        return eindResultaat;
     }
 }
