@@ -9,13 +9,22 @@ public class DomeinController {
     private int resultaat;
     Speler speler = new Speler();
     TegelRij tegelrij = new TegelRij();
+    ArrayList<Speler> spelers = new ArrayList<>();
 
     public DomeinController() {
 
     }
-
-    public DomeinController(Speler speler) {
-
+    public DomeinController(Speler speler)
+    {
+        
+    }
+    public DomeinController(int aantal)
+    {
+        for (int counter = 1; counter <= aantal; counter++) 
+        {
+           Speler speler = new Speler();
+           spelers.add(speler);            
+        }
     }
 
     public boolean isEindeRonde() {
@@ -182,5 +191,23 @@ public class DomeinController {
     public int berekenEindResultaat(){
         int eindResultaat = speler.berekenEindResultaat();
         return eindResultaat;
+    }
+    public void vulspelers()
+    {
+        
+    }
+    public void geefnaam(String naam, int aantal)
+    {
+        spelers.get(aantal).setSpelerNaam(naam);
+    }
+    public Speler getspeler(int persoon)
+    {
+        return spelers.get(persoon);
+    }
+    public void aanmakendobbelsteen()
+    {
+      Dobbelsteen dobbelsteen = new Dobbelsteen();
+        zetWaarde(dobbelsteen.rolDobbelsteen());
+        voegDWToe();
     }
 }
