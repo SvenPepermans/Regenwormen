@@ -10,7 +10,7 @@ import java.util.Collections;
 
 public class RegenwormenApplicatie {
 
-    public static void main(String[] args) {
+    public void start() {
 
         Scanner input = new Scanner(System.in);
         int index = 0;
