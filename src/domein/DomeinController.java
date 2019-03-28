@@ -11,6 +11,14 @@ public class DomeinController {
     TegelRij tegelrij = new TegelRij();
     ArrayList<Speler> spelers = new ArrayList<>();
 
+    public ArrayList<Speler> getSpelers() {
+        return spelers;
+    }
+
+    public void setSpelers(ArrayList<Speler> spelers) {
+        this.spelers = spelers;
+    }   
+    
     public DomeinController() {
 
     }
@@ -209,5 +217,10 @@ public class DomeinController {
       Dobbelsteen dobbelsteen = new Dobbelsteen();
         zetWaarde(dobbelsteen.rolDobbelsteen());
         voegDWToe();
+    }
+    
+    public void addSpeler(String naam){
+        Speler speler = new Speler(naam);
+        spelers.add(speler);
     }
 }
