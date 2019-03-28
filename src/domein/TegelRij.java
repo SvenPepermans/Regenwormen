@@ -13,6 +13,16 @@ public class TegelRij {
     public int getResultaat() {
         return resultaat;
     }
+    public Tegel geefHoogsteTegel(){
+        Tegel hoogsteTegel = new Tegel(0);
+        for(int index = 0; index < tegels.size()-1;index++){
+            if(tegels.get(index).nummer > hoogsteTegel.nummer){
+                hoogsteTegel = tegels.get(index);
+            }
+        }
+        
+        return hoogsteTegel;
+    }
 
     public void vulTegelRij() {
         for (int i = 21; i <= 36; i++) {
@@ -47,11 +57,11 @@ public class TegelRij {
             int index = tegels.indexOf(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())));
             Tegel omgedraaideTegel = new Tegel(-1);
             tegels.set(index, omgedraaideTegel);
-        } else if (tegels.contains(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())))) {
-            int index = tegels.indexOf(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())));
+        } else if (geefHoogsteTegel() == tegel) {
+            int index = tegels.indexOf(geefHoogsteTegel());
             tegels.set(index, tegel);
         } else {
-            int maxIndex = tegels.indexOf(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())));
+            int maxIndex = tegels.indexOf(geefHoogsteTegel());
             int tegelIndex = tegel.getNummer() - 21;
             Tegel omgedraaideTegel = new Tegel(-1);
             tegels.set(maxIndex, omgedraaideTegel);

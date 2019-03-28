@@ -141,4 +141,8 @@ public class Speler {
         }
         return eindResultaat;
     }
+    public int hoogsteTegelNummer(){
+      int tegelNummer = Collections.max(tegelNummers);
+      return tegelNummer;
+    }
 }

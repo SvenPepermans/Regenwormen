@@ -188,7 +188,7 @@ public class DomeinController {
         return speler.geefBijgehoudenTegels(tegel);
     }
     
-    public Tegel geefBovensteTegel(){
+    public Tegel geefBovensteTegel(Speler speler){
        Tegel tegel = speler.bovensteTegel();
        return tegel;
     }
