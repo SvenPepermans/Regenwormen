@@ -1,26 +1,19 @@
 package domein;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class TegelRij {
 
     private ArrayList<Tegel> tegels = new ArrayList<>();
-    int resultaat;
-    Speler speler = new Speler();
 
-    public int getResultaat() {
-        return resultaat;
-    }
-    public Tegel geefHoogsteTegel(){
+    public Tegel geefHoogsteTegel() {
         Tegel hoogsteTegel = new Tegel(0);
-        for(int index = 0; index < tegels.size()-1;index++){
-            if(tegels.get(index).nummer > hoogsteTegel.nummer){
+        for (int index = 0; index < tegels.size(); index++) {
+            if (tegels.get(index).nummer > hoogsteTegel.nummer) {
                 hoogsteTegel = tegels.get(index);
             }
         }
-        
+
         return hoogsteTegel;
     }
 
@@ -54,7 +47,7 @@ public class TegelRij {
 
     public void legTegelTerug(Speler speler, Tegel tegel) { // Verwijder tegel????
         if (tegel == null) {
-            int index = tegels.indexOf(Collections.max(tegels, Comparator.comparing(t -> t.getNummer())));
+            int index = tegels.indexOf(geefHoogsteTegel());
             Tegel omgedraaideTegel = new Tegel(-1);
             tegels.set(index, omgedraaideTegel);
         } else if (geefHoogsteTegel() == tegel) {
@@ -69,11 +62,14 @@ public class TegelRij {
         }
     }
 
-    public Tegel neemTegel(Tegel tegel) {
+    public Tegel neemTegel(Tegel tegel, ArrayList<Speler> spelers) {
         do {
             int index = tegels.indexOf(tegel);
-            if (tegel.getNummer() == 0 || tegel.getNummer() == -1) {
-                if (index <= 0) {
+            if (index < 0) {
+                tegel = null;
+                break;
+            } else if (tegel.getNummer() == -1 || tegel.getNummer() == 0) {
+                if (index == 0) {
                     tegel = null;
                     break;
                 } else {
@@ -96,7 +92,7 @@ public class TegelRij {
         return tegel;
     }
 
-    public boolean isEindeSpel() { 
+    public boolean isEindeSpel() {
         boolean eindeSpel = false;
         for (int index = 0; index < tegels.size(); index++) {
             if (tegels.get(index).nummer >= 21) {
@@ -108,6 +104,28 @@ public class TegelRij {
         }
         return eindeSpel;
     }
-    
-}
 
+    public boolean kanTegelStelen(Tegel tegel, ArrayList<Speler> spelers, int resultaat, Speler speler) {
+        boolean steel = false;
+        Tegel controleTegel = new Tegel(resultaat);
+        for (int i = 0; i < spelers.size(); i++) {
+            Speler target = spelers.get(i);
+            Tegel targetTegel = target.bovensteTegel();
+            if (targetTegel == null) {
+                steel = false;
+            } else if (targetTegel.nummer == controleTegel.nummer) {
+                target.verwijderTegel();
+                speler.voegTegelToe(controleTegel);
+                speler.voegTegelNummerToe(controleTegel.nummer);
+                steel = true;
+                break;
+            } else {
+                steel = false;
+            }
+
+        }
+        return steel;
+
+    }
+
+}

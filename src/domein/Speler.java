@@ -60,7 +60,9 @@ public class Speler {
     public int getAantalDobbelstenen() {
         return aantalDobbelstenen;
     }
-
+    public void leegDobbelsteenWaardenSpeler(){
+        dobbelsteenWaarden.clear();
+    }
     public boolean voegKeuzeToe() {
         Scanner input = new Scanner(System.in);
 
@@ -76,6 +78,10 @@ public class Speler {
         }
         return true;
 
+    }
+
+    public void clearGekozenWaarden() {
+        gekozenWaarden.clear();
     }
 
     public void voegDobbelsteenWaardenToe() {
@@ -99,7 +105,7 @@ public class Speler {
 
         } else {
             bijgehoudenTegels.remove(bijgehoudenTegels.size() - 1);
-            tegelNummers.remove(tegelNummers.size()-1);
+            tegelNummers.remove(tegelNummers.size() - 1);
         }
     }
 
@@ -122,7 +128,9 @@ public class Speler {
             // int tegelNummer = tegel.nummer;
             if (tegel == null) {
 
-            } else {
+            } else if(tegelNummers.contains(tegel.getNummer()) || tegel.nummer == 0 || tegel.nummer == -1){
+                
+            } else{
                 tegelNummers.add(tegel.getNummer());
             }
         }
@@ -133,16 +141,21 @@ public class Speler {
         int lengte = bijgehoudenTegels.size();
         return lengte;
     }
-    
-    public int berekenEindResultaat(){
-        
-        for(int index = 0;index<bijgehoudenTegels.size()-1;index++){
+
+    public int berekenEindResultaat() {
+
+        for (int index = 0; index < bijgehoudenTegels.size(); index++) {
             eindResultaat = eindResultaat + bijgehoudenTegels.get(index).waarde;
         }
         return eindResultaat;
     }
-    public int hoogsteTegelNummer(){
-      int tegelNummer = Collections.max(tegelNummers);
-      return tegelNummer;
+
+    public int hoogsteTegelNummer() {
+        int tegelNummer = Collections.max(tegelNummers);
+        return tegelNummer;
+    }
+    
+    public void voegTegelNummerToe(int nummer){
+        tegelNummers.add(nummer);
     }
 }
