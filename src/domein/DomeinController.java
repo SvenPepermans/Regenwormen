@@ -8,6 +8,9 @@ public class DomeinController {
     private boolean laatsteKeuze = false;
     private int resultaat;
     Speler speler;
+    Tegel tegel;
+    Tegel bovensteTegel;
+
     TegelRij tegelrij = new TegelRij();
     ArrayList<Speler> spelers = new ArrayList<>();
     ArrayList<Speler> winnaars = new ArrayList<>();
@@ -19,12 +22,30 @@ public class DomeinController {
         }
     }
 
+    public void setTegel(Tegel tegel) {
+        this.tegel = tegel;
+    }
+
+    public Tegel getTegel() {
+        return tegel;
+    }
+
+    public Tegel getBovensteTegel() {
+        return bovensteTegel;
+    }
+
+    public void setBovensteTegel(Tegel bovensteTegel) {
+        this.bovensteTegel = bovensteTegel;
+    }
+
     public void veranderVanSpeler(int index) {
         speler = spelers.get(index);
     }
-    public void leegGekozenWaardenSpeler(){
+
+    public void leegGekozenWaardenSpeler() {
         speler.clearGekozenWaarden();
     }
+
     public ArrayList<Speler> getSpelers() {
         return spelers;
     }
@@ -142,7 +163,8 @@ public class DomeinController {
     public boolean addChoice() {
         return speler.voegKeuzeToe();
     }
-    public void leegDobbelsteenWaardenSpeler(){
+
+    public void leegDobbelsteenWaardenSpeler() {
         speler.leegDobbelsteenWaardenSpeler();
     }
 
@@ -168,8 +190,9 @@ public class DomeinController {
     public Tegel neemTegel(Tegel tegel) {
         return tegelrij.neemTegel(tegel, spelers);
     }
-    public boolean kanTegelStelen(Tegel tegel){
-        return tegelrij.kanTegelStelen(tegel,spelers,resultaat,speler);
+
+    public boolean kanTegelStelen(Tegel tegel) {
+        return tegelrij.kanTegelStelen(tegel, spelers, resultaat, speler);
     }
 
     public void voegTegelToe(Tegel tegel, Speler speler) {
