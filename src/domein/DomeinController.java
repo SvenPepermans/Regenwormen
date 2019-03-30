@@ -176,18 +176,18 @@ public class DomeinController {
         return tegelrij.getTegel(resultaat);
     }
 
-    public void legTegelTerug(Speler speler, Tegel tegel) {
+    public void legTegelTerug(Tegel tegel) {
         if (speler.bijgehoudenTegelsLengte() == 0) {
             tegel = null;
         }
         tegelrij.legTegelTerug(speler, tegel);
     }
 
-    public void verwijderTegel(Speler speler) {
+    public void verwijderTegel() {
         speler.verwijderTegel();
     }
 
-    public Tegel neemTegel(Tegel tegel) {
+    public Tegel neemTegel() {
         return tegelrij.neemTegel(tegel, spelers);
     }
 
@@ -195,7 +195,7 @@ public class DomeinController {
         return tegelrij.kanTegelStelen(tegel, spelers, resultaat, speler);
     }
 
-    public void voegTegelToe(Tegel tegel, Speler speler) {
+    public void voegTegelToe() {
         speler.voegTegelToe(tegel);
     }
 
@@ -207,15 +207,15 @@ public class DomeinController {
         tegelrij.vulTegelRij();
     }
 
-    public String geefSpelerNaam(Speler speler) {
+    public String geefSpelerNaam() {
         return speler.getSpelerNaam();
     }
 
-    public ArrayList<Integer> geefBijgehoudenTegels(Speler speler, Tegel tegel) {
+    public ArrayList<Integer> geefBijgehoudenTegels() {
         return speler.geefBijgehoudenTegels(tegel);
     }
 
-    public Tegel geefBovensteTegel(Speler speler) {
+    public Tegel geefBovensteTegel() {
         Tegel tegel = speler.bovensteTegel();
         return tegel;
     }
