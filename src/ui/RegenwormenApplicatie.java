@@ -1,6 +1,10 @@
 package ui;
 
 import domein.DomeinController;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.InputMismatchException;
 //import domein.Tegel;
 //import domein.Tegel;
 import java.util.Scanner;
@@ -24,18 +28,55 @@ public class RegenwormenApplicatie {
         String naam, antwoord;
 
         //Aantal Spelers
-        System.out.println("Met hoeveel spelers wil je spelen?");
-        int aantalSpelers = input.nextInt();
+        boolean juistAntwoord = false;
+        boolean juistFormaat = false;
+        Date date = null;
 
-        DomeinController DC = new DomeinController(aantalSpelers);
+        int aantalSpelers = 0;
+        do {
+            System.out.println("Met hoeveel spelers wil je spelen? (2-8 Spelers)");
+            try {
+                aantalSpelers = input.nextInt();
+                juistAntwoord = true;
+                if (aantalSpelers < 2 || aantalSpelers > 8) {
+                    System.out.println("Invalid value");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid value");
+                input.next();
+            }
+        } while (juistAntwoord == false || aantalSpelers < 2 || aantalSpelers > 8);
+
+        DomeinController DC = new DomeinController();
+        DC.voegAantalSpelersToe(aantalSpelers);
+
         for (int i = 0; i < aantalSpelers; i++) {
             System.out.println("Geef je naam in:");
             naam = input.next();
-            DC.geefnaam(naam, i);
-        }
+            System.out.println("Geef je geboorteDatum in (YYYY.MM.DD): ");
+            //SimpleDateFormat format = new SimpleDateFormat("dd-MM-YYYY");
+                       SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
 
+           
+            do {
+                String dateString = input.next();
+                juistFormaat = false;
+                try {
+                    date = format.parse(dateString);
+                    juistFormaat = true;
+                } catch (ParseException e) {
+                    System.out.println("Invalid format");
+                }
+            } while (juistFormaat == false);
+            DC.geefDetails(naam, date, i);
+            
+        }
+        
+        DC.sorteerJongNaarOud();
+        
         //tegelRij aanmaken
         DC.vulTegelRij();
+
         System.out.println("We beginnen met ronde 1:");
         do {
             // Speler kiezen
@@ -149,6 +190,8 @@ public class RegenwormenApplicatie {
         } while (eindeSpel == false);
         //Bepaal winnaar
         String winnaar = DC.bepaalWinnaar();
-        System.out.println("Het spel is voorbij! De winnaar is : " + winnaar);
+
+        System.out.println(
+                "Het spel is voorbij! De winnaar is : " + winnaar);
     }
 }

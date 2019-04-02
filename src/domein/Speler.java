@@ -1,12 +1,15 @@
 package domein;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Speler {
 
     private String spelerNaam;
+    public Date geboorteDatum;
     private ArrayList<String> dobbelsteenWaarden = new ArrayList<>();
     private ArrayList<String> gekozenWaarden = new ArrayList<>();
     private ArrayList<Tegel> bijgehoudenTegels = new ArrayList<>();
@@ -17,14 +20,16 @@ public class Speler {
     private String waarde;
     private int eindResultaat;
 
-    public Speler(String spelerNaam) {
+    public Speler(String spelerNaam, LocalDate geboorteDatum) {
         this.spelerNaam = spelerNaam;
     }
 
     public Speler() {
 
     }
-
+    public void setGeboorteDatum(Date geboorteDatum){
+        this.geboorteDatum = geboorteDatum;
+    }
     public String getSpelerNaam() {
         return spelerNaam;
     }

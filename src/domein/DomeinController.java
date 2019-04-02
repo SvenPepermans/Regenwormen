@@ -1,6 +1,8 @@
 package domein;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DomeinController {
 
@@ -15,11 +17,8 @@ public class DomeinController {
     ArrayList<Speler> spelers = new ArrayList<>();
     ArrayList<Speler> winnaars = new ArrayList<>();
 
-    public DomeinController(int aantal) {
-        for (int counter = 1; counter <= aantal; counter++) {
-            Speler speler = new Speler();
-            spelers.add(speler);
-        }
+    public DomeinController() {
+
     }
 
     public void setTegel(Tegel tegel) {
@@ -230,8 +229,13 @@ public class DomeinController {
         return eindResultaat;
     }
 
-    public void geefnaam(String naam, int aantal) {
+    public void geefDetails(String naam, Date geboorteDatum, int aantal) {
         spelers.get(aantal).setSpelerNaam(naam);
+        spelers.get(aantal).setGeboorteDatum(geboorteDatum);
+    }
+
+    public void setGeboorteDatum(Date geboorteDatum) {
+        speler.setGeboorteDatum(geboorteDatum);
     }
 
     public Speler getspeler(int persoon) {
@@ -242,11 +246,6 @@ public class DomeinController {
         Dobbelsteen dobbelsteen = new Dobbelsteen();
         zetWaarde(dobbelsteen.rolDobbelsteen());
         voegDWToe();
-    }
-
-    public void addSpeler(String naam) {
-        Speler speler = new Speler(naam);
-        spelers.add(speler);
     }
 
     public String bepaalWinnaar() {
@@ -280,5 +279,33 @@ public class DomeinController {
         }
         return winnaar;
 
+    }
+
+    public void voegAantalSpelersToe(int aantal) {
+        for (int counter = 1; counter <= aantal; counter++) {
+            Speler speler = new Speler();
+            spelers.add(speler);
+        }
+    }
+
+    public void sorteerJongNaarOud() {
+        for (int i = 1; i < spelers.size(); i++) {
+            Date date1 = spelers.get(i).geboorteDatum;
+            Date date2 = spelers.get(i - 1).geboorteDatum;
+            int compare = date2.compareTo(date1);
+            int j = i;
+            Speler speler1;
+            do {
+                speler1 = spelers.get(j);
+
+                if (compare < 0) {
+                    spelers.set(j, spelers.get(j - 1));
+                    spelers.set(j - 1, speler1);
+
+                }
+                j = j - 1;
+
+            } while (j > 0);
+        }
     }
 }
