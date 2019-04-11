@@ -21,7 +21,7 @@ public class AantalSpelersKeuzeScherm extends VBox
  private Label lblVraag;
  private TextField txfKeuze;
  private Button btnBevestig;
- private int aantalSpelers;
+ 
     
     public AantalSpelersKeuzeScherm(DomeinController dc){
         this.dc = dc;
@@ -29,13 +29,7 @@ public class AantalSpelersKeuzeScherm extends VBox
         
     }
     
-    private void setAantalSpelers(int aantal){
-        this.aantalSpelers = aantal;
-    }
-    
-    public int getAantalSpelers(){
-        return this.aantalSpelers;
-    }
+
     
 public void buildGui(){
     this.setPadding(new Insets(10));
@@ -60,7 +54,7 @@ public void buildGui(){
                 try{
                     String tekstKeuze = txfKeuze.getText();
                     int KeuzeAantal = Integer.parseInt(tekstKeuze);
-                    setAantalSpelers(KeuzeAantal);                
+                    dc.voegAantalSpelersToe(KeuzeAantal);                   
                         btnBevestigOnAction(event);
                     update();
                     
@@ -68,7 +62,7 @@ public void buildGui(){
                 catch(NumberFormatException e){
                     Alert boodschap = new Alert(Alert.AlertType.WARNING);
                     boodschap.setTitle("Er gaat iets fout.");
-                    boodschap.setContentText("Bedrag moet als geheel getal ingegeven worden");
+                    boodschap.setContentText("Aantal spelers moet als geheel getal ingegeven worden");
                     boodschap.showAndWait();
                    txfKeuze.requestFocus();
                 }

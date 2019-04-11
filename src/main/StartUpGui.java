@@ -3,6 +3,7 @@ package main;
 import domein.DomeinController;
 import gui.AantalSpelersKeuzeScherm;
 import gui.BeginScherm;
+import gui.DobbelScherm;
 import gui.SpelerNaamInputDetailScherm;
 import gui.SpelernaamInvoerScherm;
 import javafx.application.Application;

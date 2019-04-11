@@ -308,4 +308,11 @@ public class DomeinController {
             } while (j > 0);
         }
     }
+    
+      public void addSpeler(String naam, LocalDate geboorteDatum) {
+     
+        Speler speler = new Speler(naam, geboorteDatum);
+        spelers.add(speler);
+        
+    }
 }

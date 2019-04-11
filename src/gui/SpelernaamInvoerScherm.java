@@ -1,17 +1,19 @@
 package gui;
 
 import domein.DomeinController;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class SpelernaamInvoerScherm extends VBox {
 
     private DomeinController dc;
-    private Button btnVoegSpelersToe;
-    AantalSpelersKeuzeScherm AsP = new AantalSpelersKeuzeScherm(dc);
+    private Button btnGaVerder;
     private Label lblVoegSpelerToe;
     private TextField txfSpelerNaam;
 
@@ -24,22 +26,33 @@ public class SpelernaamInvoerScherm extends VBox {
 
     public void buildGui() {
 
-        SpelerNaamInputDetailScherm Snids = new SpelerNaamInputDetailScherm(dc, AsP.getAantalSpelers());
+       
         this.setPadding(new Insets(10));
-
-        btnVoegSpelersToe = new Button();
-        btnVoegSpelersToe.setText("Voeg spelers toe");
+        for (int counter = 1; counter <= dc.getSpelers().size(); counter++) {
+             SpelerNaamInputDetailScherm Snids = new SpelerNaamInputDetailScherm(dc, counter);
+         this.getChildren().add(Snids);
+         }
+        btnGaVerder = new Button();
+        btnGaVerder.setText("Ga verder");
         this.setSpacing(10);
 
-        for (int counter = 1; counter <= AsP.getAantalSpelers(); counter++) {
-            lblVoegSpelerToe = new Label();
-            lblVoegSpelerToe.setText(String.format("Geef de naam in van speler %d", counter));
-            
-            txfSpelerNaam = new TextField("");
-            this.getChildren().addAll(lblVoegSpelerToe, txfSpelerNaam);
-        }
-        this.getChildren().add(btnVoegSpelersToe);
+        this.getChildren().add(btnGaVerder);
 
+        
     }
 
+    private void btnGaVerderOnAction(ActionEvent event){
+       dc.vulTegelRij();
+        gaVerder();
+    }
+    
+    public void gaVerder(){
+        Stage stage = (Stage)this.getScene().getWindow();
+       
+       double breedte = this.getScene().getWidth();
+       double hoogte = this.getScene().getHeight();
+       stage.setTitle("Dobbelen");
+       Scene scene = new Scene(new TegelScherm(this.dc), breedte, hoogte);
+       stage.setScene(scene);   
+    }
 }
