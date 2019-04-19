@@ -1,6 +1,6 @@
 package domein;
 
-import java.time.LocalDate;
+//import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -162,6 +162,10 @@ public class DomeinController {
     public boolean addChoice() {
         return speler.voegKeuzeToe();
     }
+    
+    public void addChoiceGUI(String keuze){
+        speler.addChoiceGUI(keuze);
+    }
 
     public void leegDobbelsteenWaardenSpeler() {
         speler.leegDobbelsteenWaardenSpeler();
@@ -309,10 +313,10 @@ public class DomeinController {
         }
     }
     
-      public void addSpeler(String naam, LocalDate geboorteDatum) {
-     
-        Speler speler = new Speler(naam, geboorteDatum);
-        spelers.add(speler);
-        
-    }
+//      public void addSpeler(String naam, LocalDate geboorteDatum) {
+//     
+//        Speler speler = new Speler(naam, geboorteDatum);
+//        spelers.add(speler);
+//        
+//    }
 }

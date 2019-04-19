@@ -85,6 +85,21 @@ public class Speler {
 
     }
 
+     public void addChoiceGUI(String keuze) {
+        do {
+            setGetal(keuze);
+        } while (gekozenWaarden.contains(getal) || !dobbelsteenWaarden.contains(getal));
+        int minAantal = Collections.frequency(dobbelsteenWaarden, getal);
+        dobbelsteenWaarden.clear();
+        setAantalDobbelstenen(getAantalDobbelstenen() - minAantal);
+
+        for (int aantal3 = 0; aantal3 < minAantal; aantal3++) {
+            gekozenWaarden.add(getal);
+        }
+        //return true;
+
+    }
+    
     public void clearGekozenWaarden() {
         gekozenWaarden.clear();
     }

@@ -1,7 +1,8 @@
 package gui;
 
 import domein.DomeinController;
-import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -51,8 +52,10 @@ public class SpelerNaamInputDetailScherm extends HBox
         @Override
         public void handle(ActionEvent event) {
         String SpelerNaam = txfSpelerNaam.getText();
-       LocalDate GeboorteDatum = dpGeboorteDatum.getValue();
-        dc.addSpeler(SpelerNaam, GeboorteDatum);      
+       Date geboorteDatum = Date.from(dpGeboorteDatum.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+       int index = counter-1;
+       dc.geefDetails(SpelerNaam, geboorteDatum, index);
+        //dc.addSpeler(SpelerNaam, geboorteDatum);      
         btnVoegSpelerToeOnAction(event);
         btnVoegSpelerToe.setVisible(false);
                     update();
@@ -67,6 +70,7 @@ public class SpelerNaamInputDetailScherm extends HBox
 
  void update(){
      txfSpelerNaam.setEditable(false);
+     dpGeboorteDatum.setEditable(false);
  }
  
 public void btnVoegSpelerToeOnAction(ActionEvent event){
