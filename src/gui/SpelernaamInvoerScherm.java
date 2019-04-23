@@ -49,6 +49,7 @@ public class SpelernaamInvoerScherm extends VBox {
 
     private void btnGaVerderOnAction(ActionEvent event) {
         dc.vulTegelRij();
+        dc.sorteerJongNaarOud();
         verder();
     }
 

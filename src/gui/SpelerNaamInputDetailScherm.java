@@ -54,8 +54,7 @@ public class SpelerNaamInputDetailScherm extends HBox
         String SpelerNaam = txfSpelerNaam.getText();
        Date geboorteDatum = Date.from(dpGeboorteDatum.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
        int index = counter-1;
-       dc.geefDetails(SpelerNaam, geboorteDatum, index);
-        //dc.addSpeler(SpelerNaam, geboorteDatum);      
+       dc.geefDetails(SpelerNaam, geboorteDatum, index);       
         btnVoegSpelerToeOnAction(event);
         btnVoegSpelerToe.setVisible(false);
                     update();

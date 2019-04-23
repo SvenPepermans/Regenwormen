@@ -93,7 +93,7 @@ public class RegenwormenApplicatie {
             do {
                 //Gooien
                 for (int aantalIG = 0; aantalIG < DC.geefAantalDobbelstenen(); aantalIG++) {
-                    DC.aanmakendobbelsteen();
+                    DC.aanmakenDobbelsteen();
                 }
 
                 System.out.println(DC.geefDobbelsteenWaarden());

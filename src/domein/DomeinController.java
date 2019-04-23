@@ -163,8 +163,8 @@ public class DomeinController {
         return speler.voegKeuzeToe();
     }
     
-    public void addChoiceGUI(String keuze){
-        speler.addChoiceGUI(keuze);
+    public boolean addChoiceGUI(String keuze){
+        return speler.addChoiceGUI(keuze);
     }
 
     public void leegDobbelsteenWaardenSpeler() {
@@ -242,11 +242,11 @@ public class DomeinController {
         speler.setGeboorteDatum(geboorteDatum);
     }
 
-    public Speler getspeler(int persoon) {
+    public Speler getSpeler(int persoon) {
         return spelers.get(persoon);
     }
 
-    public void aanmakendobbelsteen() {
+    public void aanmakenDobbelsteen() {
         Dobbelsteen dobbelsteen = new Dobbelsteen();
         zetWaarde(dobbelsteen.rolDobbelsteen());
         voegDWToe();

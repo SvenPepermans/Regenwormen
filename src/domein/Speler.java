@@ -16,7 +16,7 @@ public class Speler {
     private ArrayList<Integer> tegelNummers = new ArrayList<>();
 
     private String getal;
-    private int aantalDobbelstenen;
+    private int aantalDobbelstenen = 8;
     private String waarde;
     private int eindResultaat;
 
@@ -85,10 +85,13 @@ public class Speler {
 
     }
 
-     public void addChoiceGUI(String keuze) {
-        do {
-            setGetal(keuze);
-        } while (gekozenWaarden.contains(getal) || !dobbelsteenWaarden.contains(getal));
+     public boolean addChoiceGUI(String keuze) {
+      do {
+           setGetal(keuze);
+       } while (gekozenWaarden.contains(getal) || !dobbelsteenWaarden.contains(getal));
+        if(gekozenWaarden.contains(getal) || !dobbelsteenWaarden.contains(getal)){
+          
+        }
         int minAantal = Collections.frequency(dobbelsteenWaarden, getal);
         dobbelsteenWaarden.clear();
         setAantalDobbelstenen(getAantalDobbelstenen() - minAantal);
@@ -96,7 +99,7 @@ public class Speler {
         for (int aantal3 = 0; aantal3 < minAantal; aantal3++) {
             gekozenWaarden.add(getal);
         }
-        //return true;
+        return true;
 
     }
     
