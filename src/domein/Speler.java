@@ -27,9 +27,11 @@ public class Speler {
     public Speler() {
 
     }
-    public void setGeboorteDatum(Date geboorteDatum){
+    
+    public void setGeboorteDatum(Date geboorteDatum) {
         this.geboorteDatum = geboorteDatum;
     }
+    
     public String getSpelerNaam() {
         return spelerNaam;
     }
@@ -65,9 +67,11 @@ public class Speler {
     public int getAantalDobbelstenen() {
         return aantalDobbelstenen;
     }
-    public void leegDobbelsteenWaardenSpeler(){
+    
+    public void leegDobbelsteenWaardenSpeler() {
         dobbelsteenWaarden.clear();
     }
+    
     public boolean voegKeuzeToe() {
         Scanner input = new Scanner(System.in);
 
@@ -86,12 +90,11 @@ public class Speler {
     }
 
      public boolean addChoiceGUI(String keuze) {
-      do {
-           setGetal(keuze);
-       } while (gekozenWaarden.contains(getal) || !dobbelsteenWaarden.contains(getal));
-        if(gekozenWaarden.contains(getal) || !dobbelsteenWaarden.contains(getal)){
-          
-        }
+//      do {
+//           setGetal(keuze);
+//       } while (gekozenWaarden.contains(getal) || !dobbelsteenWaarden.contains(getal));
+         setGetal(keuze);
+        if (!gekozenWaarden.contains(getal)) {
         int minAantal = Collections.frequency(dobbelsteenWaarden, getal);
         dobbelsteenWaarden.clear();
         setAantalDobbelstenen(getAantalDobbelstenen() - minAantal);
@@ -100,7 +103,12 @@ public class Speler {
             gekozenWaarden.add(getal);
         }
         return true;
+        } else{
+          return false; 
+        }
 
+        
+        
     }
     
     public void clearGekozenWaarden() {
@@ -151,9 +159,9 @@ public class Speler {
             // int tegelNummer = tegel.nummer;
             if (tegel == null) {
 
-            } else if(tegelNummers.contains(tegel.getNummer()) || tegel.nummer == 0 || tegel.nummer == -1){
+            } else if (tegelNummers.contains(tegel.getNummer()) || tegel.nummer == 0 || tegel.nummer == -1) {
                 
-            } else{
+            } else {
                 tegelNummers.add(tegel.getNummer());
             }
         }
