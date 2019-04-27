@@ -20,7 +20,8 @@ import javafx.scene.layout.Priority;
 
 
 public class DobbelScherm extends GridPane {
-
+    
+    private HoofdScherm hoofdScherm;
     private DomeinController dc;
     private Button btnDobbelsteen;
     private InputStream input;
@@ -30,8 +31,8 @@ public class DobbelScherm extends GridPane {
 
     private Label lblJongste, lblGekozenWaarden;
 
-    public DobbelScherm(DomeinController dc) {
-
+    public DobbelScherm(HoofdScherm hoofdScherm, DomeinController dc) {
+        this.hoofdScherm = hoofdScherm;
         this.dc = dc;
         dc.veranderVanSpeler(spelerIndex);
         

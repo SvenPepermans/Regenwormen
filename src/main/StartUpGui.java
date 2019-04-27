@@ -4,6 +4,7 @@ import domein.DomeinController;
 import gui.AantalSpelersKeuzeScherm;
 import gui.BeginScherm;
 import gui.DobbelScherm;
+import gui.HoofdScherm;
 import gui.SpelerNaamInputDetailScherm;
 import gui.SpelernaamInvoerScherm;
 import javafx.application.Application;
@@ -17,7 +18,7 @@ public class StartUpGui extends Application
     {
         DomeinController dc = new DomeinController();
 
-        Scene scene = new Scene(new BeginScherm(dc));
+        Scene scene = new Scene(new HoofdScherm(dc));
         primaryStage.setScene(scene);
         primaryStage.setTitle("Regenwormen");
 

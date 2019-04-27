@@ -13,13 +13,14 @@ import javafx.stage.Stage;
 
 public class SpelernaamInvoerScherm extends VBox {
 
+    private HoofdScherm hoofdScherm;
     private DomeinController dc;
     private Button btnGaVerder;
     private Label lblVoegSpelerToe;
     private TextField txfSpelerNaam;
 
-    public SpelernaamInvoerScherm(DomeinController dc) {
-
+    public SpelernaamInvoerScherm(HoofdScherm hoofdScherm, DomeinController dc) {
+        this.hoofdScherm = hoofdScherm;
         this.dc = dc;
         buildGui();
 
@@ -50,10 +51,10 @@ public class SpelernaamInvoerScherm extends VBox {
     private void btnGaVerderOnAction(ActionEvent event) {
         dc.vulTegelRij();
         dc.sorteerJongNaarOud();
-        verder();
+        hoofdScherm.toonDobbelScherm();
     }
 
-    public void verder() {
+    /*public void verder() {
         Stage stage = (Stage) this.getScene().getWindow();
 
         double breedte = this.getScene().getWidth();
@@ -61,5 +62,5 @@ public class SpelernaamInvoerScherm extends VBox {
         stage.setTitle("Dobbelen");
         Scene scene = new Scene(new DobbelScherm(this.dc), breedte, hoogte);
         stage.setScene(scene);
-    }
+    }*/
 }
