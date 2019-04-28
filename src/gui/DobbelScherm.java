@@ -12,14 +12,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 
 
 
-public class DobbelScherm extends GridPane {
+public class DobbelScherm extends BorderPane {
     
     private HoofdScherm hoofdScherm;
     private DomeinController dc;
@@ -40,19 +42,22 @@ public class DobbelScherm extends GridPane {
     }
 
     public void buildGui() { 
-        this.setStyle("-fx-alignment: CENTER;"
+        this.setStyle("-fx-alignment: LEFT;"
                 + "-fx-width: 100%;"
                 + "-fx-height: 100%;");
-        setGridLinesVisible(true);
-        dc.setEindeRonde(false);
-        this.setHgap(10);
-        this.setVgap(10);     
+        dc.setEindeRonde(false);   
         this.setPadding(new Insets(10));
         dc.setTegel(null);
+        HBox hbox = new HBox(300);
+        hbox.setSpacing(10);
+        //HBox.setHgrow(hbox, Priority.ALWAYS);
+        
+        
        
 
-//        ColumnConstraints column1 = new ColumnConstraints(100, 100, Double.MAX_VALUE);
-//        column1.setHgrow(Priority.ALWAYS);
+       //ColumnConstraints column1 = new ColumnConstraints(100, 100, Double.MAX_VALUE);
+      // column1.setHgrow(Priority.ALWAYS);
+       
 //        ColumnConstraints column2 = new ColumnConstraints(100, 100, Double.MAX_VALUE);
 //        column2.setHgrow(Priority.ALWAYS);
 //        ColumnConstraints column3 = new ColumnConstraints(100, 100, Double.MAX_VALUE);
@@ -105,21 +110,15 @@ public class DobbelScherm extends GridPane {
                     break;
             }
            
-            HBox hbox = new HBox(300);
-            hbox.setSpacing(10);
-            HBox.setHgrow(hbox, Priority.ALWAYS);
             Image image = new Image(input);
             ImageView imageView = new ImageView(image);
 
             btnDobbelsteen = new Button();
             btnDobbelsteen.setGraphic(imageView);
             btnDobbelsteen.setText(waarde);
-
-            
-                    
             hbox.getChildren().add(btnDobbelsteen);
-                  this.addRow(3, hbox);
-            hbox.setAlignment(Pos.CENTER);
+
+
             btnDobbelsteen.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -161,13 +160,16 @@ public class DobbelScherm extends GridPane {
             });
 
         }
+        this.setCenter(hbox);
+        hbox.setAlignment(Pos.CENTER);
         lblJongste = new Label(String.format(dc.geefSpelerNaam()));
-        this.addRow(1, lblJongste);
+        this.setTop(lblJongste);
 
         lblGekozenWaarden = new Label(
                 String.join(", ", dc.geefGekozenWaarden())
         );
-        this.addRow(4, lblGekozenWaarden);
+        this.setBottom(lblGekozenWaarden);
+        
     }
 
     void update() {
