@@ -17,6 +17,15 @@ public class TegelRij {
         return hoogsteTegel;
     }
 
+    public ArrayList<Tegel> getTegels() {
+        return tegels;
+    }
+    
+    public int getNummerIndex(int teller){
+      return  tegels.get(teller).getNummer();
+        
+    }
+
     public void vulTegelRij() {
         for (int i = 21; i <= 36; i++) {
             Tegel tegel = new Tegel(i);

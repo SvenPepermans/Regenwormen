@@ -15,6 +15,7 @@ public class Tegel {
     public int getNummer() {
         return nummer;
     }
+    
 
     public void setNummer(int nummer) {
         this.nummer = nummer;

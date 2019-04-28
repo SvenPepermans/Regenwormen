@@ -26,7 +26,7 @@ public class HoofdScherm extends VBox {
         this.dc = dc;
         this.aantalSpelersScherm = new AantalSpelersKeuzeScherm(this, dc);
         setSpacing(10);
-        getChildren().add(new Label("HoofdScherm"));
+       // getChildren().add(new Label("HoofdScherm"));
         getChildren().add(beginScherm);
 
     }

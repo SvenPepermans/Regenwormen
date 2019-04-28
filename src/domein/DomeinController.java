@@ -12,6 +12,7 @@ public class DomeinController {
     Speler speler;
     Tegel tegel;
     Tegel bovensteTegel;
+   
 
     TegelRij tegelrij = new TegelRij();
     ArrayList<Speler> spelers = new ArrayList<>();
@@ -21,12 +22,22 @@ public class DomeinController {
 
     }
 
+  public ArrayList<Tegel> getTegels(){
+      return tegelrij.getTegels();
+  }
+    
+    
+
     public void setTegel(Tegel tegel) {
         this.tegel = tegel;
     }
 
     public Tegel getTegel() {
         return tegel;
+    }
+    
+    public int getTegelValue(int teller){
+        return tegelrij.getNummerIndex(teller);
     }
 
     public Tegel getBovensteTegel() {
