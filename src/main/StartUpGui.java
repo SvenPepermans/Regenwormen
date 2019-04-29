@@ -1,12 +1,11 @@
 package main;
 
 import domein.DomeinController;
-import gui.AantalSpelersKeuzeScherm;
+import gui.SpelersGegevensScherm;
 import gui.BeginScherm;
 import gui.DobbelScherm;
 import gui.HoofdScherm;
 import gui.SpelerNaamInputDetailScherm;
-import gui.SpelernaamInvoerScherm;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -18,7 +17,8 @@ public class StartUpGui extends Application
     {
         DomeinController dc = new DomeinController();
 
-        Scene scene = new Scene(new HoofdScherm(dc));
+        Scene scene = new Scene(new HoofdScherm(dc), Double.MAX_VALUE, Double.MAX_VALUE);
+        scene.getStylesheets().add("/css/Style.css");
         primaryStage.setScene(scene);
         primaryStage.setTitle("Regenwormen");
 

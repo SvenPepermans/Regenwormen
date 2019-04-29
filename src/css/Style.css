@@ -1,0 +1,20 @@
+@font-face {
+    font-family: 'Jokerman';
+    src: url('/css/JOKERMAN.TTF');
+}
+
+.achtergrond {
+    -fx-background-image:url("/images/backgroundv2.jpg");
+    -fx-background-size:stretch;
+    -fx-background-opacity: 0.5;
+}
+
+#groteKnop {
+   -fx-font-family: "Jokerman";
+   -fx-font-size: 25px;
+   -fx-background-image: url("/images/gras.jpg");
+   -fx-background-size:auto;
+   -fx-background-radius: 50;
+   
+ 
+}

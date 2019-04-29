@@ -116,7 +116,17 @@ public class DomeinController {
 
         return false;
     }
+    
+      public boolean wilJeVerderSpelenGUI(char antwoord) {
+        if ('J' == (antwoord)) {
+        } else if ('N' == (antwoord)) {
+            setEindeRonde(true);
+            return true;
+        }
 
+        return false;
+    }
+    
     public void zetWaarde(String waarde) {
         speler.setWaarde(waarde);
     }
@@ -157,7 +167,7 @@ public class DomeinController {
 
         return controle;
     }
-
+    
     public ArrayList<String> geefDobbelsteenWaarden() {
         return speler.getDobbelsteenWaarden();
     }
