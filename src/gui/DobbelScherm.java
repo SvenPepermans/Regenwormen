@@ -84,7 +84,7 @@ public class DobbelScherm extends StackPane {
                 dc.setResultaat(dc.getResultaat()); //Resultaten anders benoemen bij vervormen naar DC.
                 dc.setTegel(dc.geefTegel(dc.getResultaat()));
                 Alert boodschap = new Alert(Alert.AlertType.INFORMATION);
-                boodschap.setTitle("Volgend Speler!");
+                boodschap.setTitle("Volgende Speler!");
                 boodschap.setContentText("Je beïndigt je beurt met een score van: " + String.valueOf(dc.getResultaat()));
                 boodschap.showAndWait();
 
@@ -271,6 +271,7 @@ public class DobbelScherm extends StackPane {
             lblTegel.setGraphic(imageView2);
             lblTegel.setDisable(false);
             HbTegelRij.getChildren().add(lblTegel);
+             HbTegelRij.getStyleClass().add("dobbelScherm");
 
         }
 

@@ -37,15 +37,15 @@ public class BeginScherm extends GridPane {
         btnVerder = new Button();
         btnVerder.setId("groteKnop");     
         btnVerder.setText("Ga verder");
+        btnVerder.requestFocus();
         
         ColumnConstraints colConstraints = new ColumnConstraints();
         colConstraints.setHalignment(HPos.CENTER);
         grid.getColumnConstraints().add(colConstraints);
         grid.setAlignment(Pos.CENTER);
-       // grid.add(txtWelkom, 0,0);
         grid.add(btnVerder, 0, 1);    
-        //this.setVgap(200); 
-        grid.setGridLinesVisible(true);
+ 
+
         
 
         btnVerder.setOnAction(new EventHandler<ActionEvent>() {

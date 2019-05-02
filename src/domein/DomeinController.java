@@ -26,7 +26,9 @@ public class DomeinController {
       return tegelrij.getTegels();
   }
     
-    
+  public void emptySpelers(){
+      spelers.removeAll(spelers);
+  }  
 
     public void setTegel(Tegel tegel) {
         this.tegel = tegel;

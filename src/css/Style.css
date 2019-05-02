@@ -12,9 +12,21 @@
 #groteKnop {
    -fx-font-family: "Jokerman";
    -fx-font-size: 25px;
-   -fx-background-image: url("/images/gras.jpg");
-   -fx-background-size:auto;
+   -fx-text-align: center;
    -fx-background-radius: 50;
+   -fx-border: 2px solid;
+   -fx-background-color:brown;
+   -fx-text-fill:orange;
+   -fx-stroke: yellow;
    
- 
+   
+}
+
+.dobbelScherm{
+    
+    
+}
+
+.dobbelsteen {
+    -fx-font-size: 0px;
 }

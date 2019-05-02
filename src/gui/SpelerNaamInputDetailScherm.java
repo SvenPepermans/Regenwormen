@@ -25,11 +25,13 @@ public class SpelerNaamInputDetailScherm extends HBox {
     public SpelerNaamInputDetailScherm(DomeinController dc, int counter) {
         this.dc = dc;
         this.counter = counter;
+         this.getStyleClass().add("SNIDS");
         buildGui();
 
     }
 
     public void buildGui() {
+        
         this.setPadding(new Insets(10));
         this.setSpacing(10);
 
@@ -37,6 +39,7 @@ public class SpelerNaamInputDetailScherm extends HBox {
         lblVoegSpelerToe.setText(String.format("Geef de naam in van speler %d", counter));
 
         txfSpelerNaam = new TextField("");
+        txfSpelerNaam.requestFocus();
 
         dpGeboorteDatum = new DatePicker();
 
