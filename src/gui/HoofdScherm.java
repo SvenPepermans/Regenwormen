@@ -6,13 +6,15 @@
 package gui;
 
 import domein.DomeinController;
+import javafx.geometry.Pos;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
  *
  * @author Windows 10
  */
-public class HoofdScherm extends VBox {
+public class HoofdScherm extends StackPane {
 
     public static DomeinController dc;
 
@@ -23,8 +25,9 @@ public class HoofdScherm extends VBox {
     public HoofdScherm(DomeinController dc) {
         this.dc = dc;
         this.spelersGegevensScherm = new SpelersGegevensScherm(this, dc);
-        setSpacing(10);
+        //setSpacing(10);
        // getChildren().add(new Label("HoofdScherm"));
+       this.setAlignment(Pos.CENTER);
         getChildren().add(beginScherm);
         getStyleClass().add("achtergrond");
         

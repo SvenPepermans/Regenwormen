@@ -12,21 +12,22 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 
-public class DobbelScherm extends BorderPane {
+public class DobbelScherm extends StackPane {
 
     private HoofdScherm hoofdScherm;
     private DomeinController dc;
-    private Button btnDobbelsteen, btnTegel, btnStop;
+    private Button btnDobbelsteen, btnStop;
     private InputStream input;
     private int spelerIndex = 0;
     private String keuze, antwoord;
     private Boolean isLeeg;
     private char antwoordVerderDoen;
+    private Label lblTegel;
     // private ArrayList<Button> Buttons;
 
     private Label lblJongste, lblGekozenWaardenTekst, lblGekozenWaardenImage, lblVerderDoen, lblResultaat, lblExtra;
@@ -43,6 +44,7 @@ public class DobbelScherm extends BorderPane {
 
         dc.setEindeRonde(false);
         this.setPadding(new Insets(10));
+        this.getStyleClass().add("dobbelschermAchtergrond");
         dc.setTegel(null);
         //Grids en HBoxen aanmaken
         HBox HbDobbel = new HBox(300);
@@ -118,31 +120,31 @@ public class DobbelScherm extends BorderPane {
         }
         //Afbeeldingen die met waarde overeenkomen toekennen aan dobbelstenen
         for (int index = 0; index < dc.geefDobbelsteenWaarden().size(); index++) {
-            String waarde = "";
+            String waarde = dc.geefDobbelsteenWaarden().get(index);
             switch (dc.geefDobbelsteenWaarden().get(index)) {
                 case "1":
                     input = getClass().getResourceAsStream("/images/dice1.png");
-                    waarde = "1";
+                 //   waarde = "1";
                     break;
                 case "2":
                     input = getClass().getResourceAsStream("/images/dice2.png");
-                    waarde = "2";
+                 //   waarde = "2";
                     break;
                 case "3":
                     input = getClass().getResourceAsStream("/images/dice3.png");
-                    waarde = "3";
+                  //  waarde = "3";
                     break;
                 case "4":
                     input = getClass().getResourceAsStream("/images/dice4.png");
-                    waarde = "4";
+                  //  waarde = "4";
                     break;
                 case "5":
                     input = getClass().getResourceAsStream("/images/dice5.png");
-                    waarde = "5";
+                 //   waarde = "5";
                     break;
                 case "Worm":
                     input = getClass().getResourceAsStream("/images/Worm.png");
-                    waarde = "Worm";
+                 //   waarde = "Worm";
                     break;
             }
 
@@ -151,7 +153,7 @@ public class DobbelScherm extends BorderPane {
 
             btnDobbelsteen = new Button();
             btnDobbelsteen.setGraphic(imageView);
-            btnDobbelsteen.setText(waarde);
+
             HbDobbel.getChildren().add(btnDobbelsteen);
 
             //Controle over de beurt?
@@ -171,7 +173,7 @@ public class DobbelScherm extends BorderPane {
                 dc.setEindeRonde(true);
                 Alert eindeG = new Alert(Alert.AlertType.INFORMATION);
                 eindeG.setContentText("Je beurt is succesvol, je mag een tegel kiezen, daarna is het aan de volgende speler");
-                btnTegel.setDisable(false);
+                lblTegel.setDisable(false);
                 eindeG.showAndWait();
                 update();
             } else {
@@ -180,7 +182,7 @@ public class DobbelScherm extends BorderPane {
                     @Override
                     public void handle(ActionEvent event) {
 
-                        keuze = ((Button) event.getSource()).getText();
+                        keuze = waarde;
 
                         if (dc.addChoiceGUI(keuze) == true) {
                             dc.addChoiceGUI(keuze);
@@ -210,55 +212,65 @@ public class DobbelScherm extends BorderPane {
         //TegelRij
         for (int teller = 0; teller < dc.getTegels().size(); teller++) {
 
-            btnTegel = new Button();
-            btnTegel.setText(String.valueOf(dc.getTegelValue(teller)));
+            lblTegel = new Label();
+           // lblTegel.setText(String.valueOf(dc.getTegelValue(teller)));
 
             switch (dc.getTegelValue(teller)) {
                 case 21:
+                    input = getClass().getResourceAsStream("/images/Tegel21.png");
+                    break;
                 case 22:
+                    input = getClass().getResourceAsStream("/images/Tegel22.png");
+                    break;
                 case 23:
+                    input = getClass().getResourceAsStream("/images/Tegel23.png");
+                    break;
                 case 24:
+                    input = getClass().getResourceAsStream("/images/Tegel24.png");
+                    break;
                 case 25:
+                    input = getClass().getResourceAsStream("/images/Tegel25.png");
+                    break;
                 case 26:
-                    input = getClass().getResourceAsStream("/images/dice6.png");
+                    input = getClass().getResourceAsStream("/images/Tegel26.png");
                     break;
                 case 27:
-                    input = getClass().getResourceAsStream("/images/dice6.png");
+                    input = getClass().getResourceAsStream("/images/Tegel27.png");
                     break;
                 case 28:
-                    input = getClass().getResourceAsStream("/images/dice6.png");
+                    input = getClass().getResourceAsStream("/images/Tegel28.png");
                     break;
                 case 29:
-                    input = getClass().getResourceAsStream("/images/dice6.png");
+                    input = getClass().getResourceAsStream("/images/Tegel29.png");
                     break;
                 case 30:
-                    input = getClass().getResourceAsStream("/images/dice6.png");
+                    input = getClass().getResourceAsStream("/images/Tegel30.png");
                     break;
                 case 31:
-                    input = getClass().getResourceAsStream("/images/dice6.png");
+                    input = getClass().getResourceAsStream("/images/Tegel31.png");
                     break;
                 case 32:
-                    input = getClass().getResourceAsStream("/images/dice6.png");
+                    input = getClass().getResourceAsStream("/images/Tegel32.png");
                     break;
                 case 33:
-                    input = getClass().getResourceAsStream("/images/dice6.png");
+                    input = getClass().getResourceAsStream("/images/Tegel33.png");
                     break;
                 case 34:
-                    input = getClass().getResourceAsStream("/images/dice6.png");
+                    input = getClass().getResourceAsStream("/images/Tegel34.png");
                     break;
                 case 35:
-                    input = getClass().getResourceAsStream("/images/dice6.png");
+                    input = getClass().getResourceAsStream("/images/Tegel35.png");
                     break;
                 case 36:
-                    input = getClass().getResourceAsStream("/images/dice6.png");
+                    input = getClass().getResourceAsStream("/images/Tegel36.png");
                     break;
             }
 
             Image image2 = new Image(input);
             ImageView imageView2 = new ImageView(image2);
-            btnTegel.setGraphic(imageView2);
-            btnTegel.setDisable(true);
-            HbTegelRij.getChildren().add(btnTegel);
+            lblTegel.setGraphic(imageView2);
+            lblTegel.setDisable(false);
+            HbTegelRij.getChildren().add(lblTegel);
 
         }
 
@@ -303,22 +315,23 @@ public class DobbelScherm extends BorderPane {
 
 //Linker vak Borderpane
         leftGrid.addRow(1, lblJongste);
-        leftGrid.setVgap(200);
+      //  leftGrid.setVgap(200);
         leftGrid.setGridLinesVisible(false);
-        this.setLeft(leftGrid);
+     //   this.setLeft(leftGrid);
+     leftGrid.setAlignment(Pos.CENTER_LEFT);
 //Middenvak BorderPane
         centerGrid.add(HbDobbel, 0, 1);
         centerGrid.setVgap(75);
         centerGrid.setHgap(150);
         centerGrid.addRow(3, lblGekozenWaardenTekst);
         centerGrid.addRow(4, HbGekozenWaarden);
-        centerGrid.setAlignment(Pos.BASELINE_CENTER);
+        centerGrid.setAlignment(Pos.CENTER);
         centerGrid.setGridLinesVisible(false);
-        centerGrid.addRow(2, lblVerderDoen);
-        centerGrid.addRow(3, HbVerderDoen);
-        centerGrid.addRow(1, lblResultaat);
-        centerGrid.setHalignment(lblVerderDoen, HPos.LEFT);
-        centerGrid.setHalignment(HbVerderDoen, HPos.LEFT);
+    //    centerGrid.addRow(2, lblVerderDoen);
+   //     centerGrid.addRow(3, HbVerderDoen);
+     //   centerGrid.addRow(1, lblResultaat);
+     //   centerGrid.setHalignment(lblVerderDoen, HPos.LEFT);
+     //   centerGrid.setHalignment(HbVerderDoen, HPos.LEFT);
 
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setMaxWidth(700);
@@ -327,11 +340,13 @@ public class DobbelScherm extends BorderPane {
         centerGrid.setHalignment(lblGekozenWaardenTekst, HPos.CENTER);
         HbGekozenWaarden.setAlignment(Pos.CENTER);
         centerGrid.getColumnConstraints().add(col1);
-        this.setCenter(centerGrid);
+       // this.setCenter(centerGrid);
 //Topvak BorderPane
-        this.setTop(HbTegelRij);
+     //   this.setTop(HbTegelRij);
         HbTegelRij.setPadding(new Insets(10));
-        HbTegelRij.setAlignment(Pos.CENTER);
+        HbTegelRij.setAlignment(Pos.TOP_CENTER);
+        
+        this.getChildren().addAll(leftGrid, HbTegelRij, centerGrid);
 
     }
 

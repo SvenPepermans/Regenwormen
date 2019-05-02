@@ -20,7 +20,9 @@ public class StartUpGui extends Application
         Scene scene = new Scene(new HoofdScherm(dc), Double.MAX_VALUE, Double.MAX_VALUE);
         scene.getStylesheets().add("/css/Style.css");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.setTitle("Regenwormen");
+        primaryStage.setMaximized(true);
 
         primaryStage.show();
     }

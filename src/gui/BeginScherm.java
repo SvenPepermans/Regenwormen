@@ -33,8 +33,6 @@ public class BeginScherm extends GridPane {
       GridPane grid = new GridPane();
       grid = this;
         
-        txtWelkom = new Text("Regenwormen");
-        txtWelkom.setStyle("-fx-font-size:48;");
        
         btnVerder = new Button();
         btnVerder.setId("groteKnop");     
@@ -44,7 +42,7 @@ public class BeginScherm extends GridPane {
         colConstraints.setHalignment(HPos.CENTER);
         grid.getColumnConstraints().add(colConstraints);
         grid.setAlignment(Pos.CENTER);
-        grid.add(txtWelkom, 0,0);
+       // grid.add(txtWelkom, 0,0);
         grid.add(btnVerder, 0, 1);    
         //this.setVgap(200); 
         grid.setGridLinesVisible(true);
