@@ -96,7 +96,7 @@ public class TegelRij {
 
     public Tegel getTegel(int resultaat) {
 
-        int index = resultaat - 21;
+            int index = resultaat - 21;
         Tegel tegel = tegels.get(index);
         return tegel;
     }

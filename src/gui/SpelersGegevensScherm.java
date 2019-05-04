@@ -29,7 +29,7 @@ public class SpelersGegevensScherm extends GridPane {
     private Label lblVoegSpelerToe;
     private DatePicker dpGeboorteDatum;
     private TextField txfSpelerNaam;
-
+    private int keuzeAantal;
 
     public SpelersGegevensScherm(HoofdScherm hoofdScherm, DomeinController dc) {
         this.dc = dc;
@@ -62,11 +62,11 @@ public class SpelersGegevensScherm extends GridPane {
         ImageView imageView2 = new ImageView(imageTerug);
         btnTerug = new Button("Terug", imageView2);
         btnTerug.setVisible(false);
-        
+
         btnTerug.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent arg0) {
-                             
+
                 btnTerugOnAction(arg0);
             }
         });
@@ -94,18 +94,16 @@ public class SpelersGegevensScherm extends GridPane {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                   
                     String tekstKeuze = txfKeuze.getText();
-                    int KeuzeAantal = Integer.parseInt(tekstKeuze);
-                    dc.voegAantalSpelersToe(KeuzeAantal);
-                    lblVraag.setVisible(false);
-                    txfKeuze.setVisible(false);
-                    Buttons.getChildren().remove(btnBevestig);
-                    Buttons.getChildren().add(btnGaVerder);
-                    update();
-                    btnTerug.setVisible(true);
-                    genereerSpelers();
+                    keuzeAantal = Integer.parseInt(tekstKeuze);
+                    if (keuzeAantal < 2 || keuzeAantal > 8) {
+                        Alert boodschap = new Alert(Alert.AlertType.WARNING);
+                        boodschap.setTitle("Er gaat iets fout.");
+                        boodschap.setContentText("Aantal spelers moet tussen de 2 en 8 liggen");
+                        boodschap.showAndWait();
+                        txfKeuze.requestFocus();
 
+                    }
                 } catch (NumberFormatException e) {
                     Alert boodschap = new Alert(Alert.AlertType.WARNING);
                     boodschap.setTitle("Er gaat iets fout.");
@@ -113,7 +111,16 @@ public class SpelersGegevensScherm extends GridPane {
                     boodschap.showAndWait();
                     txfKeuze.requestFocus();
                 }
-
+                if (keuzeAantal >= 2 && keuzeAantal <= 8) {
+                    dc.voegAantalSpelersToe(keuzeAantal);
+                    lblVraag.setVisible(false);
+                    txfKeuze.setVisible(false);
+                    Buttons.getChildren().remove(btnBevestig);
+                    Buttons.getChildren().add(btnGaVerder);
+                    update();
+                    btnTerug.setVisible(true);
+                    genereerSpelers();
+                }
             }
 
         });
@@ -121,14 +128,14 @@ public class SpelersGegevensScherm extends GridPane {
     }
 
     public void genereerSpelers() {
-        VBox VbSpelers = new VBox();   
+        VBox VbSpelers = new VBox();
         VbSpelers.setPadding(new Insets(10));
         for (int counter = 1; counter <= dc.getSpelers().size(); counter++) {
-             SpelerNaamInputDetailScherm Snids = new SpelerNaamInputDetailScherm(dc, counter);
+            SpelerNaamInputDetailScherm Snids = new SpelerNaamInputDetailScherm(dc, counter);
             VbSpelers.getChildren().add(Snids);
             // VbSpelers.getChildren().add(buildDetailScherm(counter));    
         }
-        
+
         this.add(VbSpelers, 0, 0);
         this.setAlignment(Pos.CENTER);
         this.setGridLinesVisible(true);
@@ -141,7 +148,7 @@ public class SpelersGegevensScherm extends GridPane {
         });
 
     }
-    
+
 //       public HBox buildDetailScherm(int counter) {
 //     
 //        HBox HbSpelers = new HBox();
@@ -184,7 +191,6 @@ public class SpelersGegevensScherm extends GridPane {
 //    public void btnVoegSpelerToeOnAction(ActionEvent event) {
 //        txfSpelerNaam.setFocusTraversable(true);
 //    }
-
     void update() {
         txfKeuze.setText("");
     }
@@ -194,14 +200,14 @@ public class SpelersGegevensScherm extends GridPane {
         dc.sorteerJongNaarOud();
         hoofdScherm.toonDobbelScherm();
     }
-    
+
     private void btnTerugOnAction(ActionEvent event) {
         this.getChildren().clear();
         dc.emptySpelers();
-        
+
         buildGui();
     }
-    
+
 
     /* public void bevestigEnGaVerder() {
         Stage stage = (Stage) this.getScene().getWindow();

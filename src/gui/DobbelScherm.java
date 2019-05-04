@@ -21,15 +21,17 @@ public class DobbelScherm extends StackPane {
 
     private HoofdScherm hoofdScherm;
     private DomeinController dc;
-    private Button btnDobbelsteen, btnStop;
+    private Button btnDobbelsteen, btnStop, btnDobbel;
     private InputStream input;
     private int spelerIndex = 0;
+    private int ronde = 0;
+    private int aantalSpelers;
     private String keuze, antwoord;
     private Boolean isLeeg;
     private char antwoordVerderDoen;
     private Label lblTegel;
-    // private ArrayList<Button> Buttons;
 
+    // private ArrayList<Button> Buttons;
     private Label lblJongste, lblGekozenWaardenTekst, lblGekozenWaardenImage, lblVerderDoen, lblResultaat, lblExtra;
 
     public DobbelScherm(HoofdScherm hoofdScherm, DomeinController dc) {
@@ -72,6 +74,9 @@ public class DobbelScherm extends StackPane {
         //Button Stop
         btnStop = new Button("Stop");
         btnStop.setVisible(false);
+        //Button Dobbel
+        btnDobbel = new Button("Dobbel");
+        btnDobbel.setVisible(true);
 
         btnStop.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -99,12 +104,16 @@ public class DobbelScherm extends StackPane {
                         dc.setTegel(dc.neemTegel());
                         if (dc.getTegel() == null) {
                             boodschap.setContentText("Er zijn geen tegels meer, je moet een tegel terugleggen");
+                            boodschap.showAndWait();
+
 //                                                lblExtra.setText("Er zijn geen tegels meer, je moet een tegel terugleggen");
                             dc.setBovensteTegel(dc.geefBovensteTegel());
                             dc.legTegelTerug(dc.getBovensteTegel());
                             dc.verwijderTegel();
                         } else {
                             boodschap.setContentText("Er is nog een mogelijke tegel aanwezig.");
+                            boodschap.showAndWait();
+
 //                                                lblExtra.setText("Er is nog een mogelijke tegel aanwezig.");
                             dc.voegTegelToe();
                         }
@@ -119,32 +128,33 @@ public class DobbelScherm extends StackPane {
             dc.aanmakenDobbelsteen();
         }
         //Afbeeldingen die met waarde overeenkomen toekennen aan dobbelstenen
+
         for (int index = 0; index < dc.geefDobbelsteenWaarden().size(); index++) {
             String waarde = dc.geefDobbelsteenWaarden().get(index);
             switch (dc.geefDobbelsteenWaarden().get(index)) {
                 case "1":
                     input = getClass().getResourceAsStream("/images/dice1.png");
-                 //   waarde = "1";
+                    //   waarde = "1";
                     break;
                 case "2":
                     input = getClass().getResourceAsStream("/images/dice2.png");
-                 //   waarde = "2";
+                    //   waarde = "2";
                     break;
                 case "3":
                     input = getClass().getResourceAsStream("/images/dice3.png");
-                  //  waarde = "3";
+                    //  waarde = "3";
                     break;
                 case "4":
                     input = getClass().getResourceAsStream("/images/dice4.png");
-                  //  waarde = "4";
+                    //  waarde = "4";
                     break;
                 case "5":
                     input = getClass().getResourceAsStream("/images/dice5.png");
-                 //   waarde = "5";
+                    //   waarde = "5";
                     break;
                 case "Worm":
                     input = getClass().getResourceAsStream("/images/Worm.png");
-                 //   waarde = "Worm";
+                    //   waarde = "Worm";
                     break;
             }
 
@@ -197,8 +207,14 @@ public class DobbelScherm extends StackPane {
 
                         isLeeg = dc.geefDobbelsteenWaarden().isEmpty();
                         if (isLeeg == false) {
-                                if (dc.berekenResultaat() >= 21 && dc.geefGekozenWaarden().contains("Worm")) {
-                                    btnStop.setVisible(true);
+                            dc.setResultaat(0);
+                            if (dc.berekenResultaat() >= 21 && dc.geefGekozenWaarden().contains("Worm")) {
+                                btnStop.setVisible(true);
+                            }
+                        } else {
+                            dc.setResultaat(0);
+                            if (dc.berekenResultaat() >= 21 && dc.geefGekozenWaarden().contains("Worm")) {
+                                btnStop.setVisible(true);
                             }
                         }
 
@@ -213,7 +229,7 @@ public class DobbelScherm extends StackPane {
         for (int teller = 0; teller < dc.getTegels().size(); teller++) {
 
             lblTegel = new Label();
-           // lblTegel.setText(String.valueOf(dc.getTegelValue(teller)));
+            // lblTegel.setText(String.valueOf(dc.getTegelValue(teller)));
 
             switch (dc.getTegelValue(teller)) {
                 case 21:
@@ -271,7 +287,7 @@ public class DobbelScherm extends StackPane {
             lblTegel.setGraphic(imageView2);
             lblTegel.setDisable(false);
             HbTegelRij.getChildren().add(lblTegel);
-             HbTegelRij.getStyleClass().add("dobbelScherm");
+            HbTegelRij.getStyleClass().add("dobbelScherm");
 
         }
 
@@ -316,10 +332,10 @@ public class DobbelScherm extends StackPane {
 
 //Linker vak Borderpane
         leftGrid.addRow(1, lblJongste);
-      //  leftGrid.setVgap(200);
+        //  leftGrid.setVgap(200);
         leftGrid.setGridLinesVisible(false);
-     //   this.setLeft(leftGrid);
-     leftGrid.setAlignment(Pos.CENTER_LEFT);
+        //   this.setLeft(leftGrid);
+        leftGrid.setAlignment(Pos.CENTER_LEFT);
 //Middenvak BorderPane
         centerGrid.add(HbDobbel, 0, 1);
         centerGrid.setVgap(75);
@@ -328,11 +344,11 @@ public class DobbelScherm extends StackPane {
         centerGrid.addRow(4, HbGekozenWaarden);
         centerGrid.setAlignment(Pos.CENTER);
         centerGrid.setGridLinesVisible(false);
-    //    centerGrid.addRow(2, lblVerderDoen);
-   //     centerGrid.addRow(3, HbVerderDoen);
-     //   centerGrid.addRow(1, lblResultaat);
-     //   centerGrid.setHalignment(lblVerderDoen, HPos.LEFT);
-     //   centerGrid.setHalignment(HbVerderDoen, HPos.LEFT);
+        centerGrid.addRow(2, lblVerderDoen);
+        centerGrid.addRow(3, HbVerderDoen);
+        centerGrid.addRow(1, lblResultaat);
+        centerGrid.setHalignment(lblVerderDoen, HPos.LEFT);
+        centerGrid.setHalignment(HbVerderDoen, HPos.LEFT);
 
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setMaxWidth(700);
@@ -341,12 +357,12 @@ public class DobbelScherm extends StackPane {
         centerGrid.setHalignment(lblGekozenWaardenTekst, HPos.CENTER);
         HbGekozenWaarden.setAlignment(Pos.CENTER);
         centerGrid.getColumnConstraints().add(col1);
-       // this.setCenter(centerGrid);
+//         this.setCenter(centerGrid);
 //Topvak BorderPane
-     //   this.setTop(HbTegelRij);
+        //   this.setTop(HbTegelRij);
         HbTegelRij.setPadding(new Insets(10));
         HbTegelRij.setAlignment(Pos.TOP_CENTER);
-        
+
         this.getChildren().addAll(leftGrid, HbTegelRij, centerGrid);
 
     }
@@ -354,11 +370,27 @@ public class DobbelScherm extends StackPane {
     void update() {
         this.getChildren().clear();
         if (dc.isEindeRonde() == true) {
-            spelerIndex = spelerIndex + 1;
+            aantalSpelers = dc.geefAantalSpelers();
+            if (spelerIndex + 1 < aantalSpelers) {
+                spelerIndex++;
+            } else {
+                ronde++;
+                spelerIndex = 0;
+//                System.out.println("We beginnen nu met ronde " + ronde + ": ");
+
+            }
             dc.veranderVanSpeler(spelerIndex);
+            dc.leegGekozenWaardenSpeler();
+            dc.setTegel(null);
+            dc.setEindeRonde(false);
+            dc.zetAantalDobbelstenen(8);
+            if (dc.isEindeSpel() == true) {
+                String winnaar = dc.bepaalWinnaar();
+
+//            System.out.println("Het spel is voorbij! De winnaar is : " + winnaar);
+            }
         }
         buildGui();
-
     }
 
     private void test() {

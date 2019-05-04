@@ -25,6 +25,11 @@ public class DomeinController {
   public ArrayList<Tegel> getTegels(){
       return tegelrij.getTegels();
   }
+  
+  public int geefAantalSpelers(){
+      
+      return spelers.size();
+  }
     
   public void emptySpelers(){
       spelers.removeAll(spelers);
@@ -57,6 +62,7 @@ public class DomeinController {
     public void leegGekozenWaardenSpeler() {
         speler.clearGekozenWaarden();
     }
+    
 
     public ArrayList<Speler> getSpelers() {
         return spelers;
