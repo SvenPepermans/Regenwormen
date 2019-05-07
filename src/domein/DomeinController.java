@@ -13,6 +13,7 @@ public class DomeinController {
     Tegel tegel;
     Tegel bovensteTegel;
     String winnaar;
+    int hoogsteScore;
 
     TegelRij tegelrij = new TegelRij();
     ArrayList<Speler> spelers = new ArrayList<>();
@@ -299,6 +300,7 @@ public class DomeinController {
             } else if (score > hoogsteScore) {
                 winnaars.clear();
                 hoogsteScore = score;
+                this.hoogsteScore = hoogsteScore;
                 winnaar = spelers.get(i).getSpelerNaam();
                 this.winnaar = winnaar;
 
@@ -319,6 +321,13 @@ public class DomeinController {
         }
         return winnaar;
 
+    }
+    
+    public int getHoogsteScore(){
+        return hoogsteScore;
+    }
+    public void setHoogsteScore(int score){
+        this.hoogsteScore = score;
     }
 
     public void voegAantalSpelersToe(int aantal) {

@@ -18,8 +18,9 @@ public class WinnaarScherm extends BorderPane {
 
     private HoofdScherm hoofdScherm;
     private DomeinController dc;
-    private Label lblTopLabel, lblcenLabel;
+    private Label lblTopLabel, lblCenLabel;
     private String winnaar;
+    private int score;
     
     public WinnaarScherm(HoofdScherm hoofdScherm, DomeinController dc){
         this.hoofdScherm = hoofdScherm;
@@ -29,8 +30,9 @@ public class WinnaarScherm extends BorderPane {
     
     public void buildGui(){
         this.winnaar = dc.getWinnaar();
-        lblcenLabel = new Label(String.format("De winnaar is: %s", winnaar));
-        setCenter(lblcenLabel);
+        this.score = dc.getHoogsteScore();
+        lblCenLabel = new Label(String.format("De winnaar is: %s met een score van %s", winnaar, score));
+        setCenter(lblCenLabel);
     }
 
     

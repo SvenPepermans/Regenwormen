@@ -416,8 +416,9 @@ public class DobbelScherm extends StackPane {
             dc.zetAantalDobbelstenen(8);
             dc.leegDobbelsteenWaardenSpeler();
             if (dc.isEindeSpel() == true) {
-                String winnaar = dc.bepaalWinnaar();
-
+                dc.bepaalWinnaar();
+                hoofdScherm.toonWinnaarScherm();
+                return;
 //            System.out.println("Het spel is voorbij! De winnaar is : " + winnaar);
             }
         }
