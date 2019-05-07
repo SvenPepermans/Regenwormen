@@ -139,6 +139,14 @@ public class Speler {
             tegelNummers.remove(tegelNummers.size() - 1);
         }
     }
+    
+    public void verwijderTegelGUI() {
+        if (bijgehoudenTegels.isEmpty()) {
+
+        } else {
+            bijgehoudenTegels.remove(bijgehoudenTegels.size() - 1);
+        }
+    }
 
     public Tegel bovensteTegel() {
         Tegel tegel;
@@ -166,6 +174,20 @@ public class Speler {
             }
         }
         return tegelNummers;
+    }
+        public void voegTegelNummerToe(Tegel tegel) {
+        if (bijgehoudenTegels.isEmpty()) {
+
+        } else {
+
+            if (tegel == null) {
+
+            } else if (tegelNummers.contains(tegel.getNummer()) || tegel.nummer == 0 || tegel.nummer == -1) {
+                
+            } else {
+                tegelNummers.add(tegel.getNummer());
+            }
+        }
     }
 
     public int bijgehoudenTegelsLengte() {

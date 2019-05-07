@@ -21,14 +21,13 @@ public class DobbelScherm extends StackPane {
 
     private HoofdScherm hoofdScherm;
     private DomeinController dc;
-    private Button btnDobbelsteen, btnStop, btnDobbel;
+    private Button btnDobbelsteen, btnStop, btnDobbel, btnEindig;
     private InputStream input;
+    private int ronde;
     private int spelerIndex = 0;
-    private int ronde = 0;
     private int aantalSpelers;
-    private String keuze, antwoord;
+    private String keuze;
     private Boolean isLeeg;
-    private char antwoordVerderDoen;
     private Label lblTegel;
 
     // private ArrayList<Button> Buttons;
@@ -77,12 +76,22 @@ public class DobbelScherm extends StackPane {
         //Button Dobbel
         btnDobbel = new Button("Dobbel");
         btnDobbel.setVisible(true);
-
+        //Button EindigSpel
+        btnEindig = new Button("Beëindig");
+        btnEindig.setVisible(true);
+        
+        btnEindig.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event){
+                
+                dc.bepaalWinnaar();
+                hoofdScherm.toonWinnaarScherm();
+            }  
+        });
         btnStop.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                antwoordVerderDoen = 'N';
-                dc.wilJeVerderSpelenGUI(antwoordVerderDoen);
+                dc.setEindeRonde(true);
                 btnDobbelsteen.setVisible(false);
 //                                    lblResultaat.setVisible(true);
 //                                    lblResultaat.setText("Je beïndigt je beurt met een score van: " + String.valueOf(dc.getResultaat()));
@@ -94,7 +103,7 @@ public class DobbelScherm extends StackPane {
                 boodschap.showAndWait();
 
                 if (dc.controle(dc.getTegel()) == true) {
-                    if (dc.kanTegelStelen(dc.getTegel()) == true) {
+                    if (dc.kanTegelStelenGUI(dc.getTegel()) == true) {
                         boodschap.setTitle("Volgende Speler!");
                         boodschap.setContentText("Je kan een tegel stelen van een speler");
                         boodschap.showAndWait();
@@ -109,7 +118,7 @@ public class DobbelScherm extends StackPane {
 //                                                lblExtra.setText("Er zijn geen tegels meer, je moet een tegel terugleggen");
                             dc.setBovensteTegel(dc.geefBovensteTegel());
                             dc.legTegelTerug(dc.getBovensteTegel());
-                            dc.verwijderTegel();
+                            dc.verwijderTegelGUI();
                         } else {
                             boodschap.setContentText("Er is nog een mogelijke tegel aanwezig.");
                             boodschap.showAndWait();
@@ -123,108 +132,128 @@ public class DobbelScherm extends StackPane {
 
             }
         });
+
+        btnDobbel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                btnDobbel.setVisible(false);
+                for (int index = 0; index < dc.geefDobbelsteenWaarden().size(); index++) {
+                    String waarde = dc.geefDobbelsteenWaarden().get(index);
+                    switch (dc.geefDobbelsteenWaarden().get(index)) {
+                        case "1":
+                            input = getClass().getResourceAsStream("/images/dice1.png");
+                            //   waarde = "1";
+                            break;
+                        case "2":
+                            input = getClass().getResourceAsStream("/images/dice2.png");
+                            //   waarde = "2";
+                            break;
+                        case "3":
+                            input = getClass().getResourceAsStream("/images/dice3.png");
+                            //  waarde = "3";
+                            break;
+                        case "4":
+                            input = getClass().getResourceAsStream("/images/dice4.png");
+                            //  waarde = "4";
+                            break;
+                        case "5":
+                            input = getClass().getResourceAsStream("/images/dice5.png");
+                            //   waarde = "5";
+                            break;
+                        case "Worm":
+                            input = getClass().getResourceAsStream("/images/Worm.png");
+                            //   waarde = "Worm";
+                            break;
+                    }
+
+                    Image image = new Image(input);
+                    ImageView imageView = new ImageView(image);
+
+                    btnDobbelsteen = new Button();
+                    btnDobbelsteen.setGraphic(imageView);
+
+                    HbDobbel.getChildren().add(btnDobbelsteen);
+
+                    //Controle over de beurt?
+                    if (dc.controlerenOfJeNogVerderKan() == false) {
+                        dc.setBovensteTegel(dc.geefBovensteTegel());
+                        dc.legTegelTerug(dc.geefBovensteTegel());
+                        dc.verwijderTegelGUI();
+                        dc.setEindeRonde(true);
+                        Alert eindeV = new Alert(Alert.AlertType.ERROR);
+                        eindeV.setContentText("Je beurt is gefaald, je verliest een tegel en het is aan de volgende speler");
+                        eindeV.showAndWait();
+                        update();
+                        return;
+                    } else if (dc.isLaatsteKeuze() == true) {
+                        dc.setResultaat(dc.getResultaat());
+                        dc.setTegel(dc.geefTegel(dc.getResultaat()));
+                        dc.voegTegelToe();
+                        dc.setEindeRonde(true);
+                        Alert eindeG = new Alert(Alert.AlertType.INFORMATION);
+                        eindeG.setContentText("Je beurt is succesvol, je mag een tegel kiezen, daarna is het aan de volgende speler");
+                        lblTegel.setDisable(false);
+                        eindeG.showAndWait();
+                        update();
+                        break;
+                    } else {
+
+                        btnDobbelsteen.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                keuze = waarde;
+
+                                if (dc.addChoiceGUI(keuze) == true) {
+                                    dc.addChoiceGUI(keuze);
+                                    btnDobbel.setVisible(true);
+                                    update();
+                                } else {
+                                    Alert boodschap = new Alert(Alert.AlertType.WARNING);
+                                    boodschap.setTitle("Er gaat iets fout.");
+                                    boodschap.setContentText("Je hebt dit getal al eens gekozen.");
+                                    boodschap.showAndWait();
+                                    btnDobbelsteen.requestFocus();
+                                }
+
+                                isLeeg = dc.geefDobbelsteenWaarden().isEmpty();
+                                if (isLeeg == false) {
+                                    dc.setResultaat(0);
+                                    if (dc.berekenResultaat() >= 21 && dc.geefGekozenWaarden().contains("Worm")) {
+                                        btnStop.setVisible(true);
+
+                                    }
+                                } else {
+                                    dc.setResultaat(0);
+                                    if (dc.berekenResultaat() >= 21 && dc.geefGekozenWaarden().contains("Worm")) {
+                                        btnStop.setVisible(true);
+                                        btnDobbel.setVisible(false);
+
+                                    } else {
+                                        dc.setBovensteTegel(dc.geefBovensteTegel());
+                                        dc.legTegelTerug(dc.geefBovensteTegel());
+                                        dc.verwijderTegelGUI();
+                                        dc.setEindeRonde(true);
+                                        Alert eindeV = new Alert(Alert.AlertType.ERROR);
+                                        eindeV.setContentText("Je beurt is gefaald, je verliest een tegel en het is aan de volgende speler");
+                                        eindeV.showAndWait();
+                                        update();
+                                    }
+                                }
+
+                            }
+                        });
+                    }
+
+                }
+            }
+        });
+
         //Dobbelstenen aanmaken
         for (int aantalIG = 0; aantalIG < dc.geefAantalDobbelstenen(); aantalIG++) {
             dc.aanmakenDobbelsteen();
         }
-        //Afbeeldingen die met waarde overeenkomen toekennen aan dobbelstenen
 
-        for (int index = 0; index < dc.geefDobbelsteenWaarden().size(); index++) {
-            String waarde = dc.geefDobbelsteenWaarden().get(index);
-            switch (dc.geefDobbelsteenWaarden().get(index)) {
-                case "1":
-                    input = getClass().getResourceAsStream("/images/dice1.png");
-                    //   waarde = "1";
-                    break;
-                case "2":
-                    input = getClass().getResourceAsStream("/images/dice2.png");
-                    //   waarde = "2";
-                    break;
-                case "3":
-                    input = getClass().getResourceAsStream("/images/dice3.png");
-                    //  waarde = "3";
-                    break;
-                case "4":
-                    input = getClass().getResourceAsStream("/images/dice4.png");
-                    //  waarde = "4";
-                    break;
-                case "5":
-                    input = getClass().getResourceAsStream("/images/dice5.png");
-                    //   waarde = "5";
-                    break;
-                case "Worm":
-                    input = getClass().getResourceAsStream("/images/Worm.png");
-                    //   waarde = "Worm";
-                    break;
-            }
-
-            Image image = new Image(input);
-            ImageView imageView = new ImageView(image);
-
-            btnDobbelsteen = new Button();
-            btnDobbelsteen.setGraphic(imageView);
-
-            HbDobbel.getChildren().add(btnDobbelsteen);
-
-            //Controle over de beurt?
-            if (dc.controlerenOfJeNogVerderKan() == false) {
-                dc.setBovensteTegel(dc.geefBovensteTegel());
-                dc.legTegelTerug(dc.geefBovensteTegel());
-                dc.verwijderTegel();
-                dc.setEindeRonde(true);
-                Alert eindeV = new Alert(Alert.AlertType.ERROR);
-                eindeV.setContentText("Je beurt is gefaald, je verliest een tegel en het is aan de volgende speler");
-                eindeV.showAndWait();
-                update();
-            } else if (dc.isLaatsteKeuze() == true) {
-                dc.setResultaat(dc.getResultaat());
-                dc.setTegel(dc.geefTegel(dc.getResultaat()));
-                dc.voegTegelToe();
-                dc.setEindeRonde(true);
-                Alert eindeG = new Alert(Alert.AlertType.INFORMATION);
-                eindeG.setContentText("Je beurt is succesvol, je mag een tegel kiezen, daarna is het aan de volgende speler");
-                lblTegel.setDisable(false);
-                eindeG.showAndWait();
-                update();
-            } else {
-
-                btnDobbelsteen.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-
-                        keuze = waarde;
-
-                        if (dc.addChoiceGUI(keuze) == true) {
-                            dc.addChoiceGUI(keuze);
-                            update();
-                        } else {
-                            Alert boodschap = new Alert(Alert.AlertType.WARNING);
-                            boodschap.setTitle("Er gaat iets fout.");
-                            boodschap.setContentText("Je hebt dit getal al eens gekozen.");
-                            boodschap.showAndWait();
-                            btnDobbelsteen.requestFocus();
-                        }
-
-                        isLeeg = dc.geefDobbelsteenWaarden().isEmpty();
-                        if (isLeeg == false) {
-                            dc.setResultaat(0);
-                            if (dc.berekenResultaat() >= 21 && dc.geefGekozenWaarden().contains("Worm")) {
-                                btnStop.setVisible(true);
-                            }
-                        } else {
-                            dc.setResultaat(0);
-                            if (dc.berekenResultaat() >= 21 && dc.geefGekozenWaarden().contains("Worm")) {
-                                btnStop.setVisible(true);
-                            }
-                        }
-
-                    }
-                });
-            }
-
-        }
-
-        HbVerderDoen.getChildren().add(btnStop);
+        HbVerderDoen.getChildren().addAll(btnStop, btnDobbel, btnEindig);
         //TegelRij
         for (int teller = 0; teller < dc.getTegels().size(); teller++) {
 
@@ -379,11 +408,13 @@ public class DobbelScherm extends StackPane {
 //                System.out.println("We beginnen nu met ronde " + ronde + ": ");
 
             }
+            dc.voegTegelNummerToe();
             dc.veranderVanSpeler(spelerIndex);
             dc.leegGekozenWaardenSpeler();
             dc.setTegel(null);
             dc.setEindeRonde(false);
             dc.zetAantalDobbelstenen(8);
+            dc.leegDobbelsteenWaardenSpeler();
             if (dc.isEindeSpel() == true) {
                 String winnaar = dc.bepaalWinnaar();
 
@@ -393,41 +424,40 @@ public class DobbelScherm extends StackPane {
         buildGui();
     }
 
-    private void test() {
-        btnDobbelsteen.setVisible(false);
-        Alert boodschap = new Alert(Alert.AlertType.INFORMATION);
-        boodschap.setTitle("Volgend ronde!");
-        boodschap.setContentText("Je beïndigt je beurt met een score van: " + String.valueOf(dc.getResultaat()));
-        boodschap.showAndWait();
-//                                    lblResultaat.setVisible(true);
-//                                    lblResultaat.setText("Je beïndigt je beurt met een score van: " + String.valueOf(dc.getResultaat()));
-        dc.setResultaat(dc.getResultaat()); //Resultaten anders benoemen bij vervormen naar DC.
-        dc.setTegel(dc.geefTegel(dc.getResultaat()));
-
-        if (dc.controle(dc.getTegel()) == true) {
-            if (dc.kanTegelStelen(dc.getTegel()) == true) {
-                boodschap.setTitle("Volgende ronde!");
-                boodschap.setContentText("Je kan een tegel stelen van een speler");
-                boodschap.showAndWait();
-//                                            lblExtra.setText("Je kan een tegel stelen van een speler");
-
-            } else {
-                dc.setTegel(dc.neemTegel());
-                if (dc.getTegel() == null) {
-                    boodschap.setContentText("Er zijn geen tegels meer, je moet een tegel terugleggen");
-//                                                lblExtra.setText("Er zijn geen tegels meer, je moet een tegel terugleggen");
-                    dc.setBovensteTegel(dc.geefBovensteTegel());
-                    dc.legTegelTerug(dc.getBovensteTegel());
-                    dc.verwijderTegel();
-                } else {
-                    boodschap.setContentText("Er is nog een mogelijke tegel aanwezig.");
-//                                                lblExtra.setText("Er is nog een mogelijke tegel aanwezig.");
-                    dc.voegTegelToe();
-                }
-            }
-        }
-    }
-
+//    private void test() {
+//        btnDobbelsteen.setVisible(false);
+//        Alert boodschap = new Alert(Alert.AlertType.INFORMATION);
+//        boodschap.setTitle("Volgend ronde!");
+//        boodschap.setContentText("Je beïndigt je beurt met een score van: " + String.valueOf(dc.getResultaat()));
+//        boodschap.showAndWait();
+////                                    lblResultaat.setVisible(true);
+////                                    lblResultaat.setText("Je beïndigt je beurt met een score van: " + String.valueOf(dc.getResultaat()));
+//        dc.setResultaat(dc.getResultaat()); //Resultaten anders benoemen bij vervormen naar DC.
+//        dc.setTegel(dc.geefTegel(dc.getResultaat()));
+//
+//        if (dc.controle(dc.getTegel()) == true) {
+//            if (dc.kanTegelStelenGUI(dc.getTegel()) == true) {
+//                boodschap.setTitle("Volgende ronde!");
+//                boodschap.setContentText("Je kan een tegel stelen van een speler");
+//                boodschap.showAndWait();
+////                                            lblExtra.setText("Je kan een tegel stelen van een speler");
+//
+//            } else {
+//                dc.setTegel(dc.neemTegel());
+//                if (dc.getTegel() == null) {
+//                    boodschap.setContentText("Er zijn geen tegels meer, je moet een tegel terugleggen");
+////                                                lblExtra.setText("Er zijn geen tegels meer, je moet een tegel terugleggen");
+//                    dc.setBovensteTegel(dc.geefBovensteTegel());
+//                    dc.legTegelTerug(dc.getBovensteTegel());
+//                    dc.verwijderTegelGUI();
+//                } else {
+//                    boodschap.setContentText("Er is nog een mogelijke tegel aanwezig.");
+////                                                lblExtra.setText("Er is nog een mogelijke tegel aanwezig.");
+//                    dc.voegTegelToe();
+//                }
+//            }
+//        }
+//    }
     private void btnDobbelsteenOnAction(ActionEvent event) {
 
     }

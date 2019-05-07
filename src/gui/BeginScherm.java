@@ -19,7 +19,6 @@ import javafx.scene.text.Text;
 public class BeginScherm extends GridPane {
     
     private HoofdScherm hoofdScherm;
-    private Text txtWelkom, txtSpelen;
     private Button btnVerder;
   
     

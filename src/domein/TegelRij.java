@@ -136,5 +136,27 @@ public class TegelRij {
         return steel;
 
     }
+    
+    public boolean kanTegelStelenGUI(Tegel tegel, ArrayList<Speler> spelers, int resultaat, Speler speler) {
+        boolean steel = false;
+        Tegel controleTegel = new Tegel(resultaat);
+        for (int i = 0; i < spelers.size(); i++) {
+            Speler target = spelers.get(i);
+            Tegel targetTegel = target.bovensteTegel();
+            if (targetTegel == null) {
+                steel = false;
+            } else if (targetTegel.nummer == controleTegel.nummer) {
+                target.verwijderTegelGUI();
+                speler.voegTegelToe(controleTegel);
+                steel = true;
+                break;
+            } else {
+                steel = false;
+            }
+
+        }
+        return steel;
+
+    }
 
 }

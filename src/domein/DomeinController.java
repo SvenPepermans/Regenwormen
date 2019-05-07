@@ -12,7 +12,7 @@ public class DomeinController {
     Speler speler;
     Tegel tegel;
     Tegel bovensteTegel;
-   
+    String winnaar;
 
     TegelRij tegelrij = new TegelRij();
     ArrayList<Speler> spelers = new ArrayList<>();
@@ -218,7 +218,9 @@ public class DomeinController {
     public void verwijderTegel() {
         speler.verwijderTegel();
     }
-
+    public void verwijderTegelGUI() {
+        speler.verwijderTegelGUI();
+    }
     public Tegel neemTegel() {
         return tegelrij.neemTegel(tegel, spelers);
     }
@@ -226,7 +228,10 @@ public class DomeinController {
     public boolean kanTegelStelen(Tegel tegel) {
         return tegelrij.kanTegelStelen(tegel, spelers, resultaat, speler);
     }
-
+    
+    public boolean kanTegelStelenGUI(Tegel tegel) {
+        return tegelrij.kanTegelStelenGUI(tegel, spelers, resultaat, speler);
+    }
     public void voegTegelToe() {
         speler.voegTegelToe(tegel);
     }
@@ -295,17 +300,19 @@ public class DomeinController {
                 winnaars.clear();
                 hoogsteScore = score;
                 winnaar = spelers.get(i).getSpelerNaam();
+                this.winnaar = winnaar;
 
             }
             if (!winnaars.isEmpty()) {
                 int hoogsteTegelNummer = 0;
                 for (int index = 0; index < winnaars.size(); index++) {
-                    speler = winnaars.get(i);
+                    speler = winnaars.get(index);
                     int tegelNummer = speler.hoogsteTegelNummer();
 
                     if (tegelNummer > hoogsteTegelNummer) {
                         hoogsteTegelNummer = tegelNummer;
-                        winnaar = winnaars.get(i).getSpelerNaam();
+                        winnaar = winnaars.get(index).getSpelerNaam();
+                        this.winnaar = winnaar;
                     }
                 }
             }
@@ -340,6 +347,13 @@ public class DomeinController {
 
             } while (j > 0);
         }
+    }
+    public void voegTegelNummerToe(){
+        speler.voegTegelNummerToe(tegel);
+    }
+    
+    public String getWinnaar(){
+        return winnaar;
     }
     
 //      public void addSpeler(String naam, LocalDate geboorteDatum) {
