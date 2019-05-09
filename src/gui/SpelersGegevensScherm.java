@@ -148,7 +148,6 @@ public class SpelersGegevensScherm extends GridPane {
         btnBevestig.getStyleClass().add("buttons");
         btnGaVerder.getStyleClass().add("buttons");
         btnTerug.getStyleClass().add("buttons");
-
     }
 
     public void genereerSpelers() {
