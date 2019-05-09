@@ -5,11 +5,33 @@ import java.util.ArrayList;
 public class TegelRij {
 
     private ArrayList<Tegel> tegels = new ArrayList<>();
+    int spelerIndex = 0;
+    int ronde = 0;
+
+    public void setTegels(ArrayList<Tegel> tegels) {
+        this.tegels = tegels;
+    }
+
+    public int getSpelerIndex() {
+        return spelerIndex;
+    }
+
+    public void setSpelerIndex(int spelerIndex) {
+        this.spelerIndex = spelerIndex;
+    }
+
+    public int getRonde() {
+        return ronde;
+    }
+
+    public void setRonde(int ronde) {
+        this.ronde = ronde;
+    }
 
     public Tegel geefHoogsteTegel() {
         Tegel hoogsteTegel = new Tegel(0);
         for (int index = 0; index < tegels.size(); index++) {
-            if (tegels.get(index).nummer > hoogsteTegel.nummer) {
+            if (tegels.get(index).getNummer() > hoogsteTegel.getNummer()) {
                 hoogsteTegel = tegels.get(index);
             }
         }
@@ -32,6 +54,14 @@ public class TegelRij {
             tegels.add(tegel);
         }
 
+    }
+    public void vulTegelRij(ArrayList<String> tegelArrayList)
+    {
+        for(int i = 0; i < tegelArrayList.size(); i++)
+                {
+                    Tegel tegel = new Tegel(Integer.valueOf(tegelArrayList.get(i)));
+                    tegels.add(tegel);
+                }
     }
 
     public boolean controle(Tegel tegel) {
@@ -104,7 +134,7 @@ public class TegelRij {
     public boolean isEindeSpel() {
         boolean eindeSpel = false;
         for (int index = 0; index < tegels.size(); index++) {
-            if (tegels.get(index).nummer >= 21) {
+            if (tegels.get(index).getNummer() >= 21) {
                 eindeSpel = false;
                 break;
             } else {
@@ -122,10 +152,10 @@ public class TegelRij {
             Tegel targetTegel = target.bovensteTegel();
             if (targetTegel == null) {
                 steel = false;
-            } else if (targetTegel.nummer == controleTegel.nummer) {
+            } else if (targetTegel.getNummer() == controleTegel.getNummer()) {
                 target.verwijderTegel();
                 speler.voegTegelToe(controleTegel);
-                speler.voegTegelNummerToe(controleTegel.nummer);
+                speler.voegTegelNummerToe(controleTegel.getNummer());
                 steel = true;
                 break;
             } else {
@@ -145,7 +175,7 @@ public class TegelRij {
             Tegel targetTegel = target.bovensteTegel();
             if (targetTegel == null) {
                 steel = false;
-            } else if (targetTegel.nummer == controleTegel.nummer) {
+            } else if (targetTegel.getNummer() == controleTegel.getNummer()) {
                 target.verwijderTegelGUI();
                 speler.voegTegelToe(controleTegel);
                 steel = true;
@@ -158,5 +188,6 @@ public class TegelRij {
         return steel;
 
     }
+
 
 }

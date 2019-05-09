@@ -1,28 +1,24 @@
 package gui;
 
-import java.io.InputStream;
+import domein.DomeinController;
+import static gui.HoofdScherm.dc;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.text.Text;
 
 
 
 public class BeginScherm extends GridPane {
     
     private HoofdScherm hoofdScherm;
-    private Button btnVerder;
+    private Button btnVerder, btnLaden;
   
     
-    public BeginScherm(HoofdScherm hoofdScherm) {
+    public BeginScherm(HoofdScherm hoofdScherm,DomeinController dc) {
         this.hoofdScherm = hoofdScherm;
         buildGui();
     }
@@ -37,12 +33,16 @@ public class BeginScherm extends GridPane {
         btnVerder.setId("groteKnop");     
         btnVerder.setText("Ga verder");
         btnVerder.requestFocus();
+        btnLaden = new Button();
+        btnLaden.setId("groteKnop");
+        btnLaden.setText("Laad vorig spel");
         
         ColumnConstraints colConstraints = new ColumnConstraints();
         colConstraints.setHalignment(HPos.CENTER);
         grid.getColumnConstraints().add(colConstraints);
         grid.setAlignment(Pos.CENTER);
-        grid.add(btnVerder, 0, 1);    
+        grid.add(btnVerder, 0, 1);
+        grid.add(btnLaden, 1, 1);
  
 
         
@@ -53,10 +53,22 @@ public class BeginScherm extends GridPane {
                 btnVerderOnAction(arg0);
             }
         });
+                btnLaden.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent arg0) {
+                dc.Laden();
+                
+                btnLadenOnAction(arg0);
+            }
+        });
     }
     
     private void btnVerderOnAction(ActionEvent event) {
         hoofdScherm.toonSpelersGegevensScherm();
+    }
+        private void btnLadenOnAction(ActionEvent event) {
+            
+        hoofdScherm.toonDobbelScherm();
     }
 }
     /* public void gaVerder(){

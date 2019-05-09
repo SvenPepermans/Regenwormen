@@ -18,7 +18,7 @@ public class HoofdScherm extends StackPane {
 
     public static DomeinController dc;
 
-    private BeginScherm beginScherm = new BeginScherm(this);
+    private BeginScherm beginScherm = new BeginScherm(this, dc);
     private SpelersGegevensScherm spelersGegevensScherm;
     private DobbelScherm dobbelScherm;
     private WinnaarScherm winnaarScherm;
@@ -44,6 +44,7 @@ public class HoofdScherm extends StackPane {
     public void toonDobbelScherm(){
         this.dobbelScherm = new DobbelScherm(this,dc);
         getChildren().remove(spelersGegevensScherm);
+        getChildren().remove(beginScherm);
         getChildren().add(dobbelScherm);
     }
     

@@ -21,10 +21,9 @@ public class DobbelScherm extends StackPane {
 
     private HoofdScherm hoofdScherm;
     private DomeinController dc;
-    private Button btnDobbelsteen, btnStop, btnDobbel, btnEindig;
+    private Button btnDobbelsteen, btnStop, btnDobbel, btnEindig, btnSave;
     private InputStream input;
-    private int ronde;
-    private int spelerIndex = 0;
+    private int ronde = 0;
     private int aantalSpelers;
     private String keuze;
     private Boolean isLeeg;
@@ -36,8 +35,8 @@ public class DobbelScherm extends StackPane {
     public DobbelScherm(HoofdScherm hoofdScherm, DomeinController dc) {
         this.hoofdScherm = hoofdScherm;
         this.dc = dc;
-        dc.veranderVanSpeler(spelerIndex);
-
+        dc.veranderVanSpeler(dc.getSpelerIndex());
+        
         buildGui();
     }
 
@@ -79,6 +78,102 @@ public class DobbelScherm extends StackPane {
         //Button EindigSpel
         btnEindig = new Button("Beëindig");
         btnEindig.setVisible(true);
+        
+        btnSave = new Button("Save");
+        btnSave.setVisible(true);
+        
+        if (dc.isSpelgeladen() == true) {
+            btnDobbel.setVisible(false);
+                    
+            for (int index = 0; index < dc.geefDobbelsteenWaarden().size(); index++) {
+                    String waarde = dc.geefDobbelsteenWaarden().get(index);
+                    switch (dc.geefDobbelsteenWaarden().get(index)) {
+                        case "1":
+                            input = getClass().getResourceAsStream("/images/dice1.png");
+                            //   waarde = "1";
+                            break;
+                        case "2":
+                            input = getClass().getResourceAsStream("/images/dice2.png");
+                            //   waarde = "2";
+                            break;
+                        case "3":
+                            input = getClass().getResourceAsStream("/images/dice3.png");
+                            //  waarde = "3";
+                            break;
+                        case "4":
+                            input = getClass().getResourceAsStream("/images/dice4.png");
+                            //  waarde = "4";
+                            break;
+                        case "5":
+                            input = getClass().getResourceAsStream("/images/dice5.png");
+                            //   waarde = "5";
+                            break;
+                        case "Worm":
+                            input = getClass().getResourceAsStream("/images/Worm.png");
+                            //   waarde = "Worm";
+                            break;
+                    }
+                    Image image = new Image(input);
+                    ImageView imageView = new ImageView(image);
+
+                    btnDobbelsteen = new Button();
+                    btnDobbelsteen.setGraphic(imageView);
+
+                    HbDobbel.getChildren().add(btnDobbelsteen);
+            
+                    {
+
+                        btnDobbelsteen.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                keuze = waarde;
+
+                                if (dc.addChoiceGUI(keuze) == true) {
+                                    dc.addChoiceGUI(keuze);
+                                    btnDobbel.setVisible(true);
+                                    update();
+                                } else {
+                                    Alert boodschap = new Alert(Alert.AlertType.WARNING);
+                                    boodschap.setTitle("Er gaat iets fout.");
+                                    boodschap.setContentText("Je hebt dit getal al eens gekozen.");
+                                    boodschap.showAndWait();
+                                    btnDobbelsteen.requestFocus();
+                                }
+
+                                isLeeg = dc.geefDobbelsteenWaarden().isEmpty();
+                                if (isLeeg == false) {
+                                    dc.setResultaat(0);
+                                    if (dc.berekenResultaat() >= 21 && dc.geefGekozenWaarden().contains("Worm")) {
+                                        btnStop.setVisible(true);
+
+                                    }
+                                } else {
+                                    dc.setResultaat(0);
+                                    if (dc.berekenResultaat() >= 21 && dc.geefGekozenWaarden().contains("Worm")) {
+                                        btnStop.setVisible(true);
+                                        btnDobbel.setVisible(false);
+
+                                    } else {
+                                        dc.setBovensteTegel(dc.geefBovensteTegel());
+                                        dc.legTegelTerug(dc.geefBovensteTegel());
+                                        dc.verwijderTegelGUI();
+                                        dc.setEindeRonde(true);
+                                        Alert eindeV = new Alert(Alert.AlertType.ERROR);
+                                        eindeV.setContentText("Je beurt is gefaald, je verliest een tegel en het is aan de volgende speler");
+                                        eindeV.showAndWait();
+                                        update();
+                                    }
+                                }
+                                }
+
+                            });
+                        
+                    }
+                    }
+        //dc.setSpelgeladen(false);
+        }
+
+        
         
         btnEindig.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -132,7 +227,7 @@ public class DobbelScherm extends StackPane {
 
             }
         });
-
+        
         btnDobbel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -247,11 +342,23 @@ public class DobbelScherm extends StackPane {
                 }
             }
         });
+                btnSave.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event){
+                
+                dc.opslaan();
+                
+            }  
+        });
 
         //Dobbelstenen aanmaken
-        for (int aantalIG = 0; aantalIG < dc.geefAantalDobbelstenen(); aantalIG++) {
+        if (dc.isSpelgeladen()== false) {
+            for (int aantalIG = 0; aantalIG < dc.geefAantalDobbelstenen(); aantalIG++) {
             dc.aanmakenDobbelsteen();
         }
+        }
+        dc.setSpelgeladen(false);
+
 
         HbVerderDoen.getChildren().addAll(btnStop, btnDobbel, btnEindig);
         //TegelRij
@@ -321,7 +428,7 @@ public class DobbelScherm extends StackPane {
         }
 
 //gekozen waarden
-        for (int index = 0; index < dc.geefGekozenWaarden().size(); index++) {
+            for (int index = 0; index < dc.geefGekozenWaarden().size(); index++) {
             String waarde = "";
             switch (dc.geefGekozenWaarden().get(index)) {
                 case "1":
@@ -358,6 +465,8 @@ public class DobbelScherm extends StackPane {
             HbGekozenWaarden.getChildren().add(lblGekozenWaardenImage);
 
         }
+        
+        
 
 //Linker vak Borderpane
         leftGrid.addRow(1, lblJongste);
@@ -378,6 +487,7 @@ public class DobbelScherm extends StackPane {
         centerGrid.addRow(1, lblResultaat);
         centerGrid.setHalignment(lblVerderDoen, HPos.LEFT);
         centerGrid.setHalignment(HbVerderDoen, HPos.LEFT);
+        centerGrid.addRow(5, btnSave);
 
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setMaxWidth(700);
@@ -400,16 +510,20 @@ public class DobbelScherm extends StackPane {
         this.getChildren().clear();
         if (dc.isEindeRonde() == true) {
             aantalSpelers = dc.geefAantalSpelers();
-            if (spelerIndex + 1 < aantalSpelers) {
-                spelerIndex++;
+            if (dc.getSpelerIndex() + 1 < aantalSpelers) {
+                dc.setSpelerIndex(dc.getSpelerIndex()+1);
+                dc.setSpelerIndex(dc.getSpelerIndex());
+                dc.setRonde(ronde);
             } else {
                 ronde++;
-                spelerIndex = 0;
+                dc.setSpelerIndex(0);
+                dc.setSpelerIndex(dc.getSpelerIndex());
+                dc.setRonde(ronde);
 //                System.out.println("We beginnen nu met ronde " + ronde + ": ");
 
             }
             dc.voegTegelNummerToe();
-            dc.veranderVanSpeler(spelerIndex);
+            dc.veranderVanSpeler(dc.getSpelerIndex());
             dc.leegGekozenWaardenSpeler();
             dc.setTegel(null);
             dc.setEindeRonde(false);

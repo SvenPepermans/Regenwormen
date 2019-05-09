@@ -1,40 +1,49 @@
 package domein;
 
 //import java.time.LocalDate;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import persistance.SpelerMapper;
+import persistance.TegelRijMapper;
 
 public class DomeinController {
 
     private boolean eindeRonde;
     private boolean laatsteKeuze = false;
+    private boolean spelgeladen = false;
     private int resultaat;
     Speler speler;
     Tegel tegel;
     Tegel bovensteTegel;
     String winnaar;
     int hoogsteScore;
+    int spelerIndex = 0;
+    int ronde = 0;
 
     TegelRij tegelrij = new TegelRij();
     ArrayList<Speler> spelers = new ArrayList<>();
     ArrayList<Speler> winnaars = new ArrayList<>();
+    SpelerMapper spelerMapper = new SpelerMapper();
+    TegelRijMapper tegelRijMapper = new TegelRijMapper();
 
     public DomeinController() {
 
     }
 
-  public ArrayList<Tegel> getTegels(){
-      return tegelrij.getTegels();
-  }
-  
-  public int geefAantalSpelers(){
-      
-      return spelers.size();
-  }
-    
-  public void emptySpelers(){
-      spelers.removeAll(spelers);
-  }  
+    public ArrayList<Tegel> getTegels() {
+        return tegelrij.getTegels();
+    }
+
+    public int geefAantalSpelers() {
+
+        return spelers.size();
+    }
+
+    public void emptySpelers() {
+        spelers.removeAll(spelers);
+    }
 
     public void setTegel(Tegel tegel) {
         this.tegel = tegel;
@@ -43,8 +52,8 @@ public class DomeinController {
     public Tegel getTegel() {
         return tegel;
     }
-    
-    public int getTegelValue(int teller){
+
+    public int getTegelValue(int teller) {
         return tegelrij.getNummerIndex(teller);
     }
 
@@ -63,7 +72,6 @@ public class DomeinController {
     public void leegGekozenWaardenSpeler() {
         speler.clearGekozenWaarden();
     }
-    
 
     public ArrayList<Speler> getSpelers() {
         return spelers;
@@ -125,8 +133,8 @@ public class DomeinController {
 
         return false;
     }
-    
-      public boolean wilJeVerderSpelenGUI(char antwoord) {
+
+    public boolean wilJeVerderSpelenGUI(char antwoord) {
         if ('J' == (antwoord)) {
         } else if ('N' == (antwoord)) {
             setEindeRonde(true);
@@ -135,7 +143,7 @@ public class DomeinController {
 
         return false;
     }
-    
+
     public void zetWaarde(String waarde) {
         speler.setWaarde(waarde);
     }
@@ -176,7 +184,7 @@ public class DomeinController {
 
         return controle;
     }
-    
+
     public ArrayList<String> geefDobbelsteenWaarden() {
         return speler.getDobbelsteenWaarden();
     }
@@ -192,8 +200,8 @@ public class DomeinController {
     public boolean addChoice() {
         return speler.voegKeuzeToe();
     }
-    
-    public boolean addChoiceGUI(String keuze){
+
+    public boolean addChoiceGUI(String keuze) {
         return speler.addChoiceGUI(keuze);
     }
 
@@ -219,9 +227,11 @@ public class DomeinController {
     public void verwijderTegel() {
         speler.verwijderTegel();
     }
+
     public void verwijderTegelGUI() {
         speler.verwijderTegelGUI();
     }
+
     public Tegel neemTegel() {
         return tegelrij.neemTegel(tegel, spelers);
     }
@@ -229,10 +239,11 @@ public class DomeinController {
     public boolean kanTegelStelen(Tegel tegel) {
         return tegelrij.kanTegelStelen(tegel, spelers, resultaat, speler);
     }
-    
+
     public boolean kanTegelStelenGUI(Tegel tegel) {
         return tegelrij.kanTegelStelenGUI(tegel, spelers, resultaat, speler);
     }
+
     public void voegTegelToe() {
         speler.voegTegelToe(tegel);
     }
@@ -322,11 +333,12 @@ public class DomeinController {
         return winnaar;
 
     }
-    
-    public int getHoogsteScore(){
+
+    public int getHoogsteScore() {
         return hoogsteScore;
     }
-    public void setHoogsteScore(int score){
+
+    public void setHoogsteScore(int score) {
         this.hoogsteScore = score;
     }
 
@@ -357,18 +369,74 @@ public class DomeinController {
             } while (j > 0);
         }
     }
-    public void voegTegelNummerToe(){
+
+    public void voegTegelNummerToe() {
         speler.voegTegelNummerToe(tegel);
     }
-    
-    public String getWinnaar(){
+
+    public String getWinnaar() {
         return winnaar;
     }
+
+    public void opslaan() {
+        
+        spelerMapper.VerwijderSpelers();
+        tegelRijMapper.VerwijderTegels();
+        
+        tegelrij.setSpelerIndex(spelerIndex);
+        tegelrij.setRonde(ronde);
+        
     
+
+        spelerMapper.voegGebruikerToe(spelers);
+        tegelRijMapper.voegGebruikerToe(tegelrij.getTegels(), tegelrij);
+
+    }
+    public void Laden()
+    {        
+        spelgeladen = true;
+
+        setSpelers(spelerMapper.zoekAlleGebruikers());
+        setSpelerIndex(tegelRijMapper.zoekAlleGebruikers());
+        tegelrij.vulTegelRij(tegelRijMapper.zoekAlleTegels());
+        
+        spelerMapper.VerwijderSpelers();
+        tegelRijMapper.VerwijderTegels();
+        
+        
+    }
+
+    public boolean isSpelgeladen() {
+        return spelgeladen;
+    }
+
+    public void setSpelgeladen(boolean spelgeladen) {
+        this.spelgeladen = spelgeladen;
+    }
+
 //      public void addSpeler(String naam, LocalDate geboorteDatum) {
 //     
 //        Speler speler = new Speler(naam, geboorteDatum);
 //        spelers.add(speler);
 //        
 //    }
+
+    public void setSpelerIndex(int spelerIndex) 
+    {
+        this.spelerIndex = spelerIndex;
+        
+    }
+
+    public void setRonde(int ronde) {
+        this.ronde = ronde;
+    }
+
+    public int getSpelerIndex() {
+        return spelerIndex;
+    }
+
+    public int getRonde() {
+        return ronde;
+    }
+    
 }

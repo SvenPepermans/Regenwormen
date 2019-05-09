@@ -14,11 +14,12 @@ public class Speler {
     private ArrayList<String> gekozenWaarden = new ArrayList<>();
     private ArrayList<Tegel> bijgehoudenTegels = new ArrayList<>();
     private ArrayList<Integer> tegelNummers = new ArrayList<>();
-
-    private String getal;
     private int aantalDobbelstenen = 8;
     private String waarde;
     private int eindResultaat;
+
+
+
 
     public Speler(String spelerNaam, LocalDate geboorteDatum) {
         this.spelerNaam = spelerNaam;
@@ -27,6 +28,24 @@ public class Speler {
     public Speler() {
 
     }
+    public ArrayList<Integer> getTegelNummers() {
+        return tegelNummers;
+    }
+
+    private String getal;
+
+    public ArrayList<Tegel> getBijgehoudenTegels() {
+        return bijgehoudenTegels;
+    }
+
+    public void setGekozenWaarden(ArrayList<String> gekozenWaarden) {
+        this.gekozenWaarden = gekozenWaarden;
+    }
+
+    public void setBijgehoudenTegels(ArrayList<Tegel> bijgehoudenTegels) {
+        this.bijgehoudenTegels = bijgehoudenTegels;
+    }
+    
     
     public void setGeboorteDatum(Date geboorteDatum) {
         this.geboorteDatum = geboorteDatum;
@@ -167,7 +186,7 @@ public class Speler {
             // int tegelNummer = tegel.nummer;
             if (tegel == null) {
 
-            } else if (tegelNummers.contains(tegel.getNummer()) || tegel.nummer == 0 || tegel.nummer == -1) {
+            } else if (tegelNummers.contains(tegel.getNummer()) || tegel.getNummer() == 0 || tegel.getNummer() == -1) {
                 
             } else {
                 tegelNummers.add(tegel.getNummer());
@@ -182,7 +201,7 @@ public class Speler {
 
             if (tegel == null) {
 
-            } else if (tegelNummers.contains(tegel.getNummer()) || tegel.nummer == 0 || tegel.nummer == -1) {
+            } else if (tegelNummers.contains(tegel.getNummer()) || tegel.getNummer() == 0 || tegel.getNummer() == -1) {
                 
             } else {
                 tegelNummers.add(tegel.getNummer());
@@ -198,7 +217,7 @@ public class Speler {
     public int berekenEindResultaat() {
 
         for (int index = 0; index < bijgehoudenTegels.size(); index++) {
-            eindResultaat = eindResultaat + bijgehoudenTegels.get(index).waarde;
+            eindResultaat = eindResultaat + bijgehoudenTegels.get(index).getWaarde();
         }
         return eindResultaat;
     }

@@ -23,6 +23,7 @@ public class StartUpGui extends Application
         primaryStage.setResizable(false);
         primaryStage.setTitle("Regenwormen");
         primaryStage.setMaximized(true);
+        
 
         primaryStage.show();
     }
