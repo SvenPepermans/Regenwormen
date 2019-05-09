@@ -18,7 +18,9 @@ public class StartUpGui extends Application
         DomeinController dc = new DomeinController();
 
         Scene scene = new Scene(new HoofdScherm(dc), Double.MAX_VALUE, Double.MAX_VALUE);
-        scene.getStylesheets().add("/css/Style.css");
+        scene.getStylesheets().add("/css/AlgemeenStyle.css");
+        scene.getStylesheets().add("/css/SpelerGegevensSchermStyle.css");
+        scene.getStylesheets().add("/css/DobbelSchermStyle.css");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.setTitle("Regenwormen");

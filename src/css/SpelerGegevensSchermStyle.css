@@ -1,0 +1,34 @@
+.buttons{
+     -fx-font-family: "Coaster";
+    -fx-background-radius: 50;
+    -fx-background-color:brown;
+    -fx-text-fill: orange;
+    -fx-font-size: 25;
+}
+
+.SpelerAantalInvoer{
+
+    -fx-font-family: "Coaster";
+    -fx-background-radius: 50;
+
+
+}
+
+.Tekst{
+    -fx-font-weight:bold;
+    -fx-font-size: 30;
+    -fx-text-fill: orange;
+    -fx-font-family: "Coaster";
+}
+
+#VoegSpelersToe{
+    -fx-font-size: 25;
+}
+
+#btnVoegSpelerToe{
+    -fx-font-size: 15;
+}
+
+.input{
+    -fx-font-size: 15;
+}

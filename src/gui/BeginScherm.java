@@ -31,7 +31,7 @@ public class BeginScherm extends GridPane {
        
         btnVerder = new Button();
         btnVerder.setId("groteKnop");     
-        btnVerder.setText("Ga verder");
+        btnVerder.setText("Begin");
         btnVerder.requestFocus();
         btnLaden = new Button();
         btnLaden.setId("groteKnop");

@@ -439,4 +439,12 @@ public class DomeinController {
         return ronde;
     }
     
+       public int getBijgehoudenTegelsValueGUI(int teller){
+        return speler.getNummerIndex(teller);
+    }
+       
+        public ArrayList<Tegel> getBijgehoudenTegels(){
+        return speler.getBijgehoudenTegels();
+    }
+    
 }

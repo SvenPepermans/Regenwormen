@@ -1,0 +1,44 @@
+@font-face {
+ 
+    font-family: 'Coaster';
+    src: url('/css/COASBL_.TTF');
+
+}
+
+.achtergrond {
+    -fx-background-image:url("/images/AchterGrond.png");
+    -fx-background-size:stretch;
+    -fx-background-opacity: 0.5;
+}
+
+#groteKnop {
+   -fx-font-family: "Coaster";
+   -fx-font-size: 25px;
+   -fx-text-align: center;
+   -fx-background-radius: 50;
+   -fx-border: 2px solid;
+   -fx-background-color:brown;
+   -fx-text-fill:orange;
+   -fx-stroke: yellow;
+   
+   
+}
+
+.Winnaar{
+    -fx-font-weight:bold;
+    -fx-font-size: 50;
+    -fx-text-fill: gold;
+    -fx-font-family: "Coaster";
+}
+
+.WinnaarAchtergrond{
+    -fx-background-image: url("/images/AchtergrondEindscherm.png");
+    -fx-background-size: stretch;
+}
+
+
+
+
+
+
+

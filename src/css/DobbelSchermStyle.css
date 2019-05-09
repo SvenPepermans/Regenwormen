@@ -1,0 +1,16 @@
+.dobbelstenenEnTegels {
+    -fx-background-image:url("/images/woodenBackground.jpg");
+    -fx-background-size: stretch;
+    -fx-border: 25px solid;
+    -fx-border-color: black;
+    
+}
+
+#btnDobbelsteen{
+    
+}
+
+.AlgemeenDobbelScherm{
+    -fx-font-size: 30;
+    -fx-text-fill: orange;
+}

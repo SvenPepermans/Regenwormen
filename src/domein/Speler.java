@@ -18,9 +18,6 @@ public class Speler {
     private String waarde;
     private int eindResultaat;
 
-
-
-
     public Speler(String spelerNaam, LocalDate geboorteDatum) {
         this.spelerNaam = spelerNaam;
     }
@@ -28,6 +25,7 @@ public class Speler {
     public Speler() {
 
     }
+
     public ArrayList<Integer> getTegelNummers() {
         return tegelNummers;
     }
@@ -45,12 +43,11 @@ public class Speler {
     public void setBijgehoudenTegels(ArrayList<Tegel> bijgehoudenTegels) {
         this.bijgehoudenTegels = bijgehoudenTegels;
     }
-    
-    
+
     public void setGeboorteDatum(Date geboorteDatum) {
         this.geboorteDatum = geboorteDatum;
     }
-    
+
     public String getSpelerNaam() {
         return spelerNaam;
     }
@@ -86,11 +83,11 @@ public class Speler {
     public int getAantalDobbelstenen() {
         return aantalDobbelstenen;
     }
-    
+
     public void leegDobbelsteenWaardenSpeler() {
         dobbelsteenWaarden.clear();
     }
-    
+
     public boolean voegKeuzeToe() {
         Scanner input = new Scanner(System.in);
 
@@ -108,28 +105,26 @@ public class Speler {
 
     }
 
-     public boolean addChoiceGUI(String keuze) {
+    public boolean addChoiceGUI(String keuze) {
 //      do {
 //           setGetal(keuze);
 //       } while (gekozenWaarden.contains(getal) || !dobbelsteenWaarden.contains(getal));
-         setGetal(keuze);
+        setGetal(keuze);
         if (!gekozenWaarden.contains(getal)) {
-        int minAantal = Collections.frequency(dobbelsteenWaarden, getal);
-        dobbelsteenWaarden.clear();
-        setAantalDobbelstenen(getAantalDobbelstenen() - minAantal);
+            int minAantal = Collections.frequency(dobbelsteenWaarden, getal);
+            dobbelsteenWaarden.clear();
+            setAantalDobbelstenen(getAantalDobbelstenen() - minAantal);
 
-        for (int aantal3 = 0; aantal3 < minAantal; aantal3++) {
-            gekozenWaarden.add(getal);
-        }
-        return true;
-        } else{
-          return false; 
+            for (int aantal3 = 0; aantal3 < minAantal; aantal3++) {
+                gekozenWaarden.add(getal);
+            }
+            return true;
+        } else {
+            return false;
         }
 
-        
-        
     }
-    
+
     public void clearGekozenWaarden() {
         gekozenWaarden.clear();
     }
@@ -158,7 +153,7 @@ public class Speler {
             tegelNummers.remove(tegelNummers.size() - 1);
         }
     }
-    
+
     public void verwijderTegelGUI() {
         if (bijgehoudenTegels.isEmpty()) {
 
@@ -187,14 +182,15 @@ public class Speler {
             if (tegel == null) {
 
             } else if (tegelNummers.contains(tegel.getNummer()) || tegel.getNummer() == 0 || tegel.getNummer() == -1) {
-                
+
             } else {
                 tegelNummers.add(tegel.getNummer());
             }
         }
         return tegelNummers;
     }
-        public void voegTegelNummerToe(Tegel tegel) {
+
+    public void voegTegelNummerToe(Tegel tegel) {
         if (bijgehoudenTegels.isEmpty()) {
 
         } else {
@@ -202,7 +198,7 @@ public class Speler {
             if (tegel == null) {
 
             } else if (tegelNummers.contains(tegel.getNummer()) || tegel.getNummer() == 0 || tegel.getNummer() == -1) {
-                
+
             } else {
                 tegelNummers.add(tegel.getNummer());
             }
@@ -226,8 +222,13 @@ public class Speler {
         int tegelNummer = Collections.max(tegelNummers);
         return tegelNummer;
     }
-    
-    public void voegTegelNummerToe(int nummer){
+
+    public void voegTegelNummerToe(int nummer) {
         tegelNummers.add(nummer);
+    }
+
+    public int getNummerIndex(int teller) {
+        return bijgehoudenTegels.get(teller).getNummer();
+
     }
 }

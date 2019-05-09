@@ -29,9 +29,11 @@ public class WinnaarScherm extends BorderPane {
     }
     
     public void buildGui(){
+        this.getStyleClass().add("WinnaarAchtergrond");
         this.winnaar = dc.getWinnaar();
         this.score = dc.getHoogsteScore();
-        lblCenLabel = new Label(String.format("De winnaar is: %s met een score van %s", winnaar, score));
+        lblCenLabel = new Label(String.format("De winnaar is: %s met een score van %s worm%s", winnaar, score, score>1?"en":""));
+        lblCenLabel.getStyleClass().add("Winnaar");
         setCenter(lblCenLabel);
     }
 

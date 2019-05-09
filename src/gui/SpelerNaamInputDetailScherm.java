@@ -21,11 +21,14 @@ public class SpelerNaamInputDetailScherm extends HBox {
     private TextField txfSpelerNaam;
     private DomeinController dc;
     private int counter;
+    private SpelersGegevensScherm sgs;
 
-    public SpelerNaamInputDetailScherm(DomeinController dc, int counter) {
+    public SpelerNaamInputDetailScherm(DomeinController dc,SpelersGegevensScherm parent, int counter) {
         this.dc = dc;
+        this.sgs = parent;
         this.counter = counter;
          this.getStyleClass().add("SNIDS");
+         this.setId(""+counter);
         buildGui();
 
     }
@@ -34,19 +37,24 @@ public class SpelerNaamInputDetailScherm extends HBox {
         
         this.setPadding(new Insets(10));
         this.setSpacing(10);
-
+        
         lblVoegSpelerToe = new Label();
         lblVoegSpelerToe.setText(String.format("Geef de naam in van speler %d", counter));
-
+        lblVoegSpelerToe.setId("VoegSpelersToe");
         txfSpelerNaam = new TextField("");
+        txfSpelerNaam.getStyleClass().add("input");
         txfSpelerNaam.requestFocus();
 
         dpGeboorteDatum = new DatePicker();
-
+        dpGeboorteDatum.getStyleClass().add("input");
+        
         btnVoegSpelerToe = new Button();
         btnVoegSpelerToe.setText("Voeg toe.");
-
+        btnVoegSpelerToe.getStyleClass().add("buttons");
+        btnVoegSpelerToe.setId("btnVoegSpelerToe");
+        
         this.getChildren().addAll(lblVoegSpelerToe, txfSpelerNaam, dpGeboorteDatum, btnVoegSpelerToe);
+        this.setMaxHeight(USE_COMPUTED_SIZE);
 
         btnVoegSpelerToe.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -56,12 +64,28 @@ public class SpelerNaamInputDetailScherm extends HBox {
                 int index = counter - 1;
                 dc.geefDetails(SpelerNaam, geboorteDatum, index);
                 btnVoegSpelerToeOnAction(event);
-                btnVoegSpelerToe.setVisible(false);
+                btnVoegSpelerToe.setVisible(false);              
                 update();
 
             }
         });
 
+         txfSpelerNaam.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dpGeboorteDatum.requestFocus();
+            }
+        });
+        
+        dpGeboorteDatum.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                btnVoegSpelerToe.requestFocus();
+            }
+        });
+             
+
+        
     }
 
     void update() {
@@ -70,6 +94,17 @@ public class SpelerNaamInputDetailScherm extends HBox {
     }
 
     public void btnVoegSpelerToeOnAction(ActionEvent event) {
-        txfSpelerNaam.setFocusTraversable(true);
+       
+        if(counter == dc.getSpelers().size()){
+            sgs.getBtnGaVerder().requestFocus();
+        }else{
+             txfSpelerNaam.setFocusTraversable(true);
+        }
+ 
     }
+    
+    public TextField getTxfSpelerNaam(){
+    
+        return txfSpelerNaam;
+}
 }
