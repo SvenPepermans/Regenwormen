@@ -16,7 +16,7 @@ public class StartUpGui extends Application
     public void start(Stage primaryStage) throws Exception
     {
         DomeinController dc = new DomeinController();
-
+        
         Scene scene = new Scene(new HoofdScherm(dc), Double.MAX_VALUE, Double.MAX_VALUE);
         scene.getStylesheets().add("/css/AlgemeenStyle.css");
         scene.getStylesheets().add("/css/SpelerGegevensSchermStyle.css");

@@ -26,7 +26,7 @@ public class DobbelScherm extends BorderPane {
 
     private HoofdScherm hoofdScherm;
     private DomeinController dc;
-    private Button btnDobbelsteen, btnStop, btnDobbel, btnEindig, btnSave;
+    private Button btnDobbelsteen, btnStop, btnDobbel, btnEindig, btnSave, btnhighscore;
     private InputStream input;
     private int ronde = 0;
     private int aantalSpelers;
@@ -46,7 +46,8 @@ public class DobbelScherm extends BorderPane {
     }
 
     public void buildGui() {
-
+                
+        
         dc.setEindeRonde(false);
         this.setPadding(new Insets(10));
         this.getStyleClass().add("dobbelschermAchtergrond");
@@ -94,6 +95,11 @@ public class DobbelScherm extends BorderPane {
         btnSave = new Button("Save");
         btnSave.setVisible(true);
         btnSave.getStyleClass().add("buttons");
+        
+        btnhighscore = new Button("Highscore");
+        btnhighscore.setVisible(true);
+        btnhighscore.getStyleClass().add("buttons");
+        
 
         if (dc.isSpelgeladen() == true) {
             btnDobbel.setVisible(false);
@@ -356,7 +362,16 @@ public class DobbelScherm extends BorderPane {
             @Override
             public void handle(ActionEvent event) {
 
-                dc.opslaan();
+                    dc.opslaan();
+              
+
+            }
+        });
+                btnhighscore.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                
+                hoofdScherm.toonHighscoreScherm();
 
             }
         });
@@ -557,6 +572,7 @@ public class DobbelScherm extends BorderPane {
         centerGrid.addRow(2, vbVerderDoen);
         centerGrid.setHalignment(vbVerderDoen, HPos.LEFT);
         centerGrid.addRow(4, btnSave);
+        centerGrid.addRow(4, btnhighscore);
 
          centerGrid.getRowConstraints().add(new RowConstraints(USE_COMPUTED_SIZE));
         centerGrid.getRowConstraints().add(new RowConstraints(100)); 

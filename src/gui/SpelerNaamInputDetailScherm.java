@@ -33,6 +33,10 @@ public class SpelerNaamInputDetailScherm extends HBox {
 
     }
 
+    SpelerNaamInputDetailScherm(DomeinController dc, int counter) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public void buildGui() {
         
         this.setPadding(new Insets(10));

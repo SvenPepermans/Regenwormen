@@ -330,6 +330,8 @@ public class DomeinController {
                 }
             }
         }
+        
+        spelerMapper.opslaanWinnaar(winnaar, hoogsteScore);
         return winnaar;
 
     }
@@ -446,5 +448,13 @@ public class DomeinController {
         public ArrayList<Tegel> getBijgehoudenTegels(){
         return speler.getBijgehoudenTegels();
     }
+        public ArrayList geefnamen()
+        {
+           return spelerMapper.getArrayListScoresNaam();
+        }
+        public ArrayList geefscore()
+        {
+           return spelerMapper.getArrayListScore();
+        }
     
 }

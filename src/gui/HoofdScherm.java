@@ -8,7 +8,6 @@ package gui;
 import domein.DomeinController;
 import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 
 /**
  *
@@ -22,6 +21,8 @@ public class HoofdScherm extends StackPane {
     private SpelersGegevensScherm spelersGegevensScherm;
     private DobbelScherm dobbelScherm;
     private WinnaarScherm winnaarScherm;
+    private HighscoreScherm highscoreScherm;
+    private boolean aanmaakHighscoreScherm = false;
 
     public HoofdScherm(DomeinController dc) {
         this.dc = dc;
@@ -52,5 +53,21 @@ public class HoofdScherm extends StackPane {
         this.winnaarScherm = new WinnaarScherm(this, dc);
         getChildren().remove(dobbelScherm);
         getChildren().add(winnaarScherm);
+    }
+    public void toonHighscoreScherm(){
+        if (aanmaakHighscoreScherm == false) 
+        {
+                    this.highscoreScherm = new HighscoreScherm(this, dc);
+                    aanmaakHighscoreScherm = true;
+        }
+        getChildren().remove(dobbelScherm);
+
+        getChildren().add(highscoreScherm);
+        
+    }
+    public void verwijderHighscoreScherm()
+    {
+        getChildren().remove(highscoreScherm);
+        getChildren().add(dobbelScherm);
     }
 }

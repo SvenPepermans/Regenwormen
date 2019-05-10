@@ -6,9 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+
 
 
 
@@ -25,6 +27,7 @@ public class BeginScherm extends GridPane {
     
     public void buildGui() {
         
+      
       GridPane grid = new GridPane();
       grid = this;
         
@@ -56,9 +59,17 @@ public class BeginScherm extends GridPane {
                 btnLaden.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent arg0) {
-                dc.Laden();
+                try {
+                    dc.Laden();
+                    btnLadenOnAction(arg0);
+                } catch (Exception e) {
+                    Alert ErrorAlert = new Alert(Alert.AlertType.ERROR);
+                    ErrorAlert.setContentText("Geen vorig spel om te laden.");
+                    ErrorAlert.showAndWait();
+                }
                 
-                btnLadenOnAction(arg0);
+                
+                
             }
         });
     }
